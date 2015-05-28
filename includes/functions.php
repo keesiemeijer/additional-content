@@ -1,4 +1,6 @@
 <?php
+namespace keesiemeijer\Additional_Content;
+
 /**
  * Functions
  *
@@ -22,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array   $options Array with additional content options.
  * @return array  Sorted array grouped by priority.
  */
-function additional_content_sort_by_priority( $options = array() ) {
+function sort_by_priority( $options = array() ) {
 	$priority_options = array();
 
 	// Add sorting _priority index with priority and key
@@ -31,7 +33,7 @@ function additional_content_sort_by_priority( $options = array() ) {
 	}
 
 	// Sort by priority and key
-	uasort(  $options, 'additional_content_sort' );
+	uasort(  $options, __NAMESPACE__ . '\\sort' );
 
 	foreach ( array_values( $options ) as $key => $option ) {
 		// Remove _priority sorting index.
@@ -53,7 +55,7 @@ function additional_content_sort_by_priority( $options = array() ) {
  * @param array
  * @return int
  */
-function additional_content_sort( $a, $b ) {
+function sort( $a, $b ) {
 	if ( $a['_priority'][0] != $b['_priority'][0] ) {
 		// sort on priority
 		return $a['_priority'][0] < $b['_priority'][0] ? -1 : 1;
@@ -72,7 +74,7 @@ function additional_content_sort( $a, $b ) {
  * @param integer $post_id Post id.
  * @return string  Content with the additional content added.
  */
-function additional_content_get_content( $content = '', $post_id = 0 ) {
+function get_content( $content = '', $post_id = 0 ) {
 
 	if ( !absint( $post_id ) ) {
 		return $content;
@@ -82,4 +84,20 @@ function additional_content_get_content( $content = '', $post_id = 0 ) {
 	$content = $additional_content->get_additional_content( (string) $content );
 
 	return $content;
+}
+
+
+/**
+ * Returns the defaults for additional content metabox fields.
+ *
+ * @since 1.0
+ * @return array Array with defaults.
+ */
+function get_defaults() {
+	return array(
+		'append'             => '',
+		'prepend'            => '',
+		'additional_content' => '',
+		'priority'           => 10,
+	);
 }

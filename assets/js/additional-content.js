@@ -9,7 +9,7 @@
 	function reset_rows() {
 		var id;
 		var rows = container.children( 'div' );
-		
+
 		rows.each( function( index ) {
 			$( this ).find( 'input, textarea, label' ).each( function() {
 
@@ -158,14 +158,6 @@
 			var content = $( this ).closest( '.ac-repeat-container' ).find( '.ac-content' );
 			var color = content.css( 'backgroundColor' );
 			content.text( label + ':' );
-			content.css( 'backgroundColor', '#FFFF33' ).animate( {
-				backgroundColor: color
-			}, {
-				complete: function() {
-					$( this ).css( 'backgroundColor', '' );
-				}
-			} );
-
 		} );
 
 	} );

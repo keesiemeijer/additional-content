@@ -1,6 +1,9 @@
 <?php
+namespace keesiemeijer\Additional_Content;
+
 /**
  * Scripts
+ * This file is only included on the post.php and post-new.php pages.
  *
  * @package     Additional Content
  * @subpackage  Functions/Scripts
@@ -20,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0
  * @return void
  */
-function ac_enqueue_edit_post_scripts() {
+function enqueue_scripts() {
 
 	wp_register_script(
 		'additional_content',
@@ -31,7 +34,7 @@ function ac_enqueue_edit_post_scripts() {
 
 	wp_enqueue_script( 'additional_content' );
 
-	$text = additional_content_metabox_text();
+	$text = metabox_text();
 
 	$js_vars = array(
 		'add_row'        => __( 'Add additional content', 'additional-content' ),
@@ -48,4 +51,4 @@ function ac_enqueue_edit_post_scripts() {
 	wp_localize_script( 'additional_content', 'ac_additional_content', $js_vars );
 }
 
-add_action( 'admin_enqueue_scripts', 'ac_enqueue_edit_post_scripts', 99 );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_scripts', 99 );

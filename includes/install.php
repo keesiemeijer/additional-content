@@ -1,4 +1,6 @@
 <?php
+namespace keesiemeijer\Additional_Content;
+
 /**
  * Install
  *
@@ -16,12 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
+ * Loads the plugin's text domain and includes files.
+ *
+ * @since 1.0
+ * @return void.
+ */
+function additional_content() {
+
+	$dir = dirname( plugin_basename( ADDITIONAL_CONTENT_PLUGIN_FILE ) ) . '/languages/';
+	load_plugin_textdomain( 'additional-content', '', $dir );
+
+	require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/functions.php';
+
+	if ( !is_admin() ) {
+		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/filters.php';
+		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/class-public.php';
+	}
+}
+
+
+/**
  * Include files in edit and new post screens.
  *
  * @since 1.0
  * @return void
  */
-function ac_install_additional_content() {
+function metabox_includes() {
 
 	$screen = get_current_screen();
 
@@ -38,5 +60,5 @@ function ac_install_additional_content() {
 	}
 }
 
-add_action( 'load-post.php',     'ac_install_additional_content' );
-add_action( 'load-post-new.php', 'ac_install_additional_content' );
+add_action( 'load-post.php',     __NAMESPACE__ . '\\metabox_includes' );
+add_action( 'load-post-new.php', __NAMESPACE__ . '\\metabox_includes' );

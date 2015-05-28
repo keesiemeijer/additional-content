@@ -3,8 +3,8 @@
 		<label class="ac-content" for="ac_additional_content-<?php echo $i; ?>"><?php echo $label; ?>:</label>
 		<textarea id="ac_additional_content-<?php echo $i; ?>" class="large-text" name="ac_additional_content[<?php echo $i; ?>][additional_content]" cols="40" rows="2"><?php echo esc_textarea( $fields['additional_content'] ); ?></textarea>
 	</p>
-	<div class="ac-options<?php echo $class_options; ?>"> 
-		<p class="ac-row<?php echo $class['append_prepend']; ?>">
+	<div class="ac-options<?php echo sanitize_html_class( $class_options ); ?>"> 
+		<p class="ac-row<?php echo sanitize_html_class( $class['append_prepend'] ); ?>">
 			<label class="selectit" for="ac_prepend-<?php echo $i; ?>" style="margin-right:2em;">
 				<input id="ac_prepend-<?php echo $i; ?>" type="checkbox" name="ac_additional_content[<?php echo $i; ?>][prepend]" value="on" data-ac-type="prepend" <?php checked( $fields['prepend'], 'on' );  ?>/>
 				<?php echo $text['prepend']; ?>

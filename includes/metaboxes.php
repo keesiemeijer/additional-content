@@ -1,4 +1,5 @@
 <?php
+namespace keesiemeijer\Additional_Content;
 /**
  * Meta boxes
  *
@@ -20,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0
  * @return array Array with classes for all rows.
  */
-function additional_content_metabox_class() {
-	return apply_filters( 'additional_content_metabox_row_classes', array(
+function metabox_classes() {
+	return apply_filters( 'additional_content_metabox_classes', array(
 			'append_prepend' => ' ac-row-show',
 			'priority'       => ' ac-row-show',
 		)
@@ -35,7 +36,7 @@ function additional_content_metabox_class() {
  * @since 1.0
  * @return array Array with text strings.
  */
-function additional_content_metabox_text() {
+function metabox_text() {
 	$text =  array(
 		'content'                => __( 'Content', 'additional-content' ),
 		'prepend_content'        => __( 'Prepend Content', 'additional-content' ),
@@ -62,8 +63,8 @@ function additional_content_metabox_text() {
  * @param array   $fields Array with field options.
  * @return string Label Text.
  */
-function additional_content_label_text( $fields ) {
-	$text = additional_content_metabox_text();
+function label_text( $fields ) {
+	$text = metabox_text();
 
 	if ( !empty( $fields['append'] ) && !empty( $fields['prepend'] ) ) {
 		$label = $text['prepend_append_content'];
@@ -84,11 +85,11 @@ function additional_content_label_text( $fields ) {
  * @param string  Post type.
  * @return void
  */
-function additional_content_meta_boxes( $post_type ) {
-	add_meta_box( 'additional-content', 'Additional Content', 'additional_content_meta_box', $post_type, 'normal', 'default' );
+function add_meta_boxes( $post_type ) {
+	add_meta_box( 'additional-content', 'Additional Content', __NAMESPACE__ . '\\meta_box', $post_type, 'normal', 'default' );
 }
 
-add_action( 'add_meta_boxes', 'additional_content_meta_boxes' );
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\\add_meta_boxes' );
 
 
 /**
@@ -97,11 +98,11 @@ add_action( 'add_meta_boxes', 'additional_content_meta_boxes' );
  * @since 1.0
  * @return void
  */
-function additional_content_meta_box() {
+function meta_box() {
 	global $post;
 
 	$additional = get_post_meta( $post->ID, '_ac_additional_content', true );
-	$defaults   = ac_additional_content()->get_defaults();
+	$defaults   = get_defaults();
 
 	echo "<style type='text/css'>
 			#additional-content-container > div {
@@ -135,8 +136,8 @@ function additional_content_meta_box() {
 			}
 			</style>";
 
-	$text  = additional_content_metabox_text();
-	$class = additional_content_metabox_class();
+	$text  = metabox_text();
+	$class = metabox_classes();
 	$class_options = ' js-visually-hidden';
 
 	echo ( !empty( $text['header_info'] ) ) ? "<p>" . $text['header_info'] . '</p>' : '';
@@ -150,7 +151,7 @@ function additional_content_meta_box() {
 		// Saved meta boxes.
 		foreach ( $additional as $fields ) {
 			$fields = array_merge( $defaults, $fields );
-			$label  = additional_content_label_text( $fields );
+			$label  = label_text( $fields );
 			include 'partials/repeatable-fields.php';
 			$i++;
 		}
@@ -174,10 +175,10 @@ function additional_content_meta_box() {
  * @since 1.0
  * @return void
  */
-function additional_content_footer_scripts() {
-	$fields           = ac_additional_content()->get_defaults();
-	$text             = additional_content_metabox_text();
-	$class            = additional_content_metabox_class();
+function admin_footer_scripts() {
+	$fields           = get_defaults();
+	$text             = metabox_text();
+	$class            = metabox_classes();
 	$class_options    = '';
 	$fields['append'] = 'on';
 	$label            = $text['append_content'];
@@ -187,7 +188,7 @@ function additional_content_footer_scripts() {
 	echo '</script>';
 }
 
-add_action( 'admin_print_footer_scripts', 'additional_content_footer_scripts', 1 );
+add_action( 'admin_print_footer_scripts', __NAMESPACE__ . '\\admin_footer_scripts', 1 );
 
 
 /**
@@ -197,7 +198,7 @@ add_action( 'admin_print_footer_scripts', 'additional_content_footer_scripts', 1
  * @param int     Post id.
  * @return void
  */
-function additional_content_save_metabox( $post_id ) {
+function save_metabox( $post_id ) {
 
 	$nonce = ( isset( $_POST['ac_additional_content_nonce'] ) ) ?  $_POST['ac_additional_content_nonce'] : '';
 
@@ -214,7 +215,7 @@ function additional_content_save_metabox( $post_id ) {
 	}
 
 	$old      = get_post_meta( $post_id, '_ac_additional_content', true );
-	$defaults = ac_additional_content()->get_defaults();
+	$defaults = get_defaults();
 	$new      = array();
 
 	if ( isset( $_POST['ac_additional_content'] ) ) {
@@ -271,7 +272,7 @@ function additional_content_save_metabox( $post_id ) {
 	if ( !empty( $new ) && $new != $old ) {
 
 		// Order the new options by priority
-		$priorities = additional_content_sort_by_priority( $new );
+		$priorities = sort_by_priority( $new );
 		$_new       = array();
 		foreach ( $priorities as $priority ) {
 			foreach ( $priority as $option ) {
@@ -285,4 +286,4 @@ function additional_content_save_metabox( $post_id ) {
 	}
 }
 
-add_action( 'save_post', 'additional_content_save_metabox' );
+add_action( 'save_post', __NAMESPACE__ . '\\save_metabox' );

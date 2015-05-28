@@ -1,4 +1,6 @@
 <?php
+namespace keesiemeijer\Additional_Content;
+
 /**
  * Public
  *
@@ -17,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class to add the additional content in single post pages.
  */
-class AC_Additional_Content_Public {
+class AC_Public {
 
 	/**
 	 * Additional content options for a post.
@@ -55,9 +57,9 @@ class AC_Additional_Content_Public {
 		 */
 		$singular = apply_filters( 'additional_content_add_content', is_singular() );
 
-		//if ( $singular ) {
-		$this->setup_options();
-		//}
+		if ( $singular ) {
+			$this->setup_options();
+		}
 	}
 
 	/**
@@ -101,7 +103,7 @@ class AC_Additional_Content_Public {
 		$priorities = array_unique( wp_list_pluck( $this->options, 'priority' ) );
 
 		// Sort and group options by priority.
-		$this->options = additional_content_sort_by_priority( $this->options );
+		$this->options = sort_by_priority( $this->options );
 
 		if ( $add_filters ) {
 
@@ -123,7 +125,7 @@ class AC_Additional_Content_Public {
 	private function validate_options( $options = array() ) {
 
 		$sanitized_options = array();
-		$defaults = ac_additional_content()->get_defaults();
+		$defaults = get_defaults();
 
 		// Sanitize and validate the options.
 		foreach ( $options as $option ) {
@@ -246,4 +248,4 @@ class AC_Additional_Content_Public {
 
 }
 
-$additional_content = new AC_Additional_Content_Public();
+$additional_content = new AC_Public();

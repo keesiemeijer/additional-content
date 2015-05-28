@@ -1,13 +1,52 @@
-module.exports = function( grunt ) { // 1
-	grunt.initConfig( { // 2
-		pkg: grunt.file.readJSON( 'package.json' ), // 3
+module.exports = function( grunt ) {
 
-		uglify: { // 4
-			options: { // 5
-				banner: '/*\n' + // 6
-					' * ' + '<%= pkg.name %>\n' + // 7
-					' * ' + 'v<%= pkg.version %>\n' + // 8
-					' * ' + '<%= grunt.template.today("yyyy-mm-dd") %>\n' + // 9
+	'use strict';
+	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
+	// Project configuration
+	grunt.initConfig( {
+
+		pkg:    grunt.file.readJSON( 'package.json' ),
+
+		addtextdomain: {
+			options: {
+				textdomain: 'additional-content',
+			},
+			target: {
+				files: {
+					src: [ '*.php', '**/*.php', '!node_modules/**', '!php-tests/**', '!bin/**' ]
+				}
+			}
+		},
+
+		wp_readme_to_markdown: {
+			your_target: {
+				files: {
+					'README.md': 'readme.txt'
+				}
+			},
+		},
+
+		makepot: {
+			target: {
+				options: {
+					domainPath: '/languages',
+					mainFile: 'additional-content.php',
+					potFilename: 'additional-content.pot',
+					potHeaders: {
+						poedit: true,
+						'x-poedit-keywordslist': true
+					},
+					type: 'wp-plugin',
+					updateTimestamp: true
+				}
+			}
+		},
+		uglify: {
+			options: {
+				banner: '/*\n' +
+					' * ' + '<%= pkg.name %>\n' +
+					' * ' + 'v<%= pkg.version %>\n' +
+					' * ' + '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 					' **/\n'
 			},
 
@@ -17,16 +56,17 @@ module.exports = function( grunt ) { // 1
 				}
 			}
 		},
-		watch: {
-			scripts: {
-				files: [ 'assets/js/additional-content.js' ],
-				tasks: [ 'uglify' ]
-			},
-		}
+
+
+
 	} );
 
+	grunt.loadNpmTasks( 'grunt-wp-i18n' );
+	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' ); // 11
-	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	
-	grunt.registerTask( 'default', [ 'uglify', 'watch' ] );
-}
+	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
+	grunt.registerTask( 'readme', ['wp_readme_to_markdown']);
+
+	grunt.util.linefeed = '\n';
+
+};
