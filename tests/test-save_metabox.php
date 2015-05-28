@@ -26,8 +26,8 @@ class Save_Metabox_Tests extends WP_UnitTestCase {
 	function setup_post() {
 
 		// set current user
-		$u = $this->factory->user->create( array( 'role' => 'administrator' ) );
-		wp_set_current_user( $u );
+		$user = $this->factory->user->create( array( 'role' => 'administrator' ) );
+		wp_set_current_user( $user );
 
 		// includes the metaboxes.php file
 		metabox_includes();
