@@ -67,7 +67,7 @@ if ( !class_exists( 'WPUpdatePhp' ) ) {
 }
 
 // Aim high :)
-$updatePhp = new WPUpdatePhp( '5.4.0' );
+$updatePhp = new WPUpdatePhp( '5.3.0' );
 
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 
