@@ -22,11 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array Array with classes for all rows.
  */
 function metabox_classes() {
-	return apply_filters( 'additional_content_metabox_classes', array(
-			'append_prepend' => ' ac-row-show',
-			'priority'       => ' ac-row-show',
-		)
-	);
+	$classes  = array();
+	$defaults = array( 'append_prepend' => true, 'priority' => true );
+	$options  = apply_filters( 'additional_content_metabox_options', $defaults );
+	$options  = array_merge( $defaults, $options );
+
+	foreach ( $options as $key => $option ) {
+		$classes[ $key ] = $option ? 'ac-option' : 'ac-option-hide';
+	}
+
+	return $classes;
 }
 
 
@@ -45,6 +50,9 @@ function metabox_text() {
 		'prepend'                => __( 'Prepend', 'additional-content' ),
 		'append'                 => __( 'Append', 'additional-content' ),
 		'priority'               => __( 'Priority', 'additional-content' ),
+		'add_row'                => __( 'Add additional content', 'additional-content' ),
+		'add_more_row'           => __( 'Add more additional content', 'additional-content' ),
+		'remove_row'             => __( 'Remove', 'additional-content' ),
 		'header_info'            => __( 'Add additional content to the post content on single post pages. ', 'additional-content' ),
 		'priority_info'          => __( 'The priority gives you control over when additional content is added.', 'additional-content' )
 		. ' ' . __( 'Default is 10.', 'additional-content' )
@@ -64,7 +72,8 @@ function metabox_text() {
  * @return string Label Text.
  */
 function label_text( $fields ) {
-	$text = metabox_text();
+	$text  = metabox_text();
+	$label = $text['content'];
 
 	if ( !empty( $fields['append'] ) && !empty( $fields['prepend'] ) ) {
 		$label = $text['prepend_append_content'];
@@ -86,7 +95,15 @@ function label_text( $fields ) {
  * @return void
  */
 function add_meta_boxes( $post_type ) {
-	add_meta_box( 'additional-content', 'Additional Content', __NAMESPACE__ . '\\meta_box', $post_type, 'normal', 'default' );
+	/**
+	 * This filter allows you to change the title of the metabox.
+	 *
+	 * @since 1.1
+	 * @param unknown $title Title of the metabox.
+	 */
+	$title = apply_filters( 'additional_content_metabox_title', __( 'Additional Content', 'additional-content' ), $post_type );
+
+	add_meta_box( 'additional-content', $title, __NAMESPACE__ . '\\meta_box', $post_type, 'normal', 'default' );
 }
 
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\\add_meta_boxes' );
@@ -115,14 +132,15 @@ function meta_box() {
 				background-color: #fff;
 				border: 1px dashed #b4b9be;
 		    }
-			.ac-top-row {
-				margin-top: 0;
-			}
-			.ac-row-hide {
-				display: none;
-			}
-			.ac-row-show {
+			.ac-option {
 				display: block;
+			}
+			.ac-option-content {
+				margin-top: 0;
+				margin-bottom: .5em;
+			}
+			.ac-option-hide {
+				display: none;
 			}
 			.js .js-visually-hidden {
 				border: 0;
@@ -136,9 +154,9 @@ function meta_box() {
 			}
 			</style>";
 
-	$text  = metabox_text();
-	$class = metabox_classes();
-	$class_options = ' js-visually-hidden';
+	$text    = metabox_text();
+	$class   = metabox_classes();
+	$visible = ' js-visually-hidden';
 
 	echo ( !empty( $text['header_info'] ) ) ? "<p>" . $text['header_info'] . '</p>' : '';
 
@@ -160,12 +178,27 @@ function meta_box() {
 		// Default meta box.
 		$fields           = $defaults;
 		$fields['append'] = 'on';
-		$class_options    = '-none';
+		$visible          = '';
+		$label            = $text['append_content'];
+		include 'partials/repeatable-fields.php';
+	}
+
+	$add_row = get_transient( 'additional_content_add_empty_row' );
+
+	if ( $add_row ) {
+		delete_transient( 'additional_content_add_empty_row' );
+
+		// Adds empty row if browsing with Javascript disabled.
+		$i++;
+		$fields           = $defaults;
+		$fields['append'] = 'on';
+		$visible          = '';
 		$label            = $text['append_content'];
 		include 'partials/repeatable-fields.php';
 	}
 
 	echo '</div>';
+	echo '<p><input id="ac-add-row" class="button" type="submit" value="' . $text['add_more_row'] . '" name="ac-add_more"></p>';
 }
 
 
@@ -179,7 +212,7 @@ function admin_footer_scripts() {
 	$fields           = get_defaults();
 	$text             = metabox_text();
 	$class            = metabox_classes();
-	$class_options    = '';
+	$visible          = '';
 	$fields['append'] = 'on';
 	$label            = $text['append_content'];
 	$i = 0;
@@ -189,6 +222,41 @@ function admin_footer_scripts() {
 }
 
 add_action( 'admin_print_footer_scripts', __NAMESPACE__ . '\\admin_footer_scripts', 1 );
+
+
+/**
+ * Updates additional content if Javascript is disabled.
+ * Updates when remove or add more butten was submitted.
+ *
+ * @since 1.1
+ * @param string  $location The destination URL.
+ * @param int     $post_id  The post ID.
+ * @return string The destination URL.
+ */
+function redirect_filter( $location, $post_id ) {
+	if ( isset( $_POST['ac_additional_content'] ) && $_POST['ac_additional_content'] ) {
+		$additionals = $_POST['ac_additional_content'];
+		foreach ( $additionals as $key => $additional ) {
+			if ( isset( $additional['remove'] ) ) {
+				unset( $additionals[ $key ] );
+			}
+		}
+
+		if ( current_user_can( 'edit_post', $post_id ) ) {
+			// Update the post meta before the metabox is displayed
+			update_additional_meta( $post_id, $additionals );
+		}
+
+	}
+
+	if ( isset( $_POST['ac-add_more'] ) && $_POST['ac-add_more'] ) {
+		set_transient( 'additional_content_add_empty_row', 1, MINUTE_IN_SECONDS * 5 );
+	}
+
+	return $location;
+}
+
+add_filter( 'redirect_post_location', __NAMESPACE__ . '\\redirect_filter', 10, 2 );
 
 
 /**
@@ -214,76 +282,13 @@ function save_metabox( $post_id ) {
 		return;
 	}
 
-	$old      = get_post_meta( $post_id, '_ac_additional_content', true );
-	$defaults = get_defaults();
-	$new      = array();
 
+	$new = array();
 	if ( isset( $_POST['ac_additional_content'] ) ) {
 		$new = $_POST['ac_additional_content'];
 	}
 
-	if ( !( !empty( $new ) && is_array( $new ) ) ) {
-		if ( $old ) {
-			delete_post_meta( $post_id, '_ac_additional_content' );
-		}
-		return;
-	}
-
-	// Validate the new settings
-	foreach ( $new as $key => $setting ) {
-
-		if ( !is_array( $setting ) ) {
-			unset( $new[ $key ] );
-			continue;
-		}
-
-		$setting = array_merge( $defaults, $setting );
-
-		/**
-		 * Filter html in additional content before it is saved to the database.
-		 *
-		 * @since 1.0
-		 * @param bool    $filter_content Filter content. Default true
-		 */
-		$filter_content = apply_filters( 'ac_additional_content_filter_html', true, $setting, $post_id );
-
-		if ( $filter_content ) {
-			$setting['additional_content'] = wp_filter_post_kses( $setting['additional_content'] );
-		}
-
-		if ( '' === trim( $setting['additional_content'] ) ) {
-			unset( $new[ $key ] );
-			continue;
-		}
-
-		foreach ( array( 'prepend', 'append' ) as $addition ) {
-			if ( 'on' !== $setting[ $addition ] ) {
-				$setting[ $addition ] = $defaults[ $addition ];
-			}
-		}
-
-		$setting['priority'] = absint( $setting['priority'] ) ? absint( $setting['priority'] ) : 10 ;
-
-		$new[ $key ] = $setting;
-	}
-
-	$new = array_values( $new );
-
-	if ( !empty( $new ) && $new != $old ) {
-
-		// Order the new options by priority
-		$priorities = sort_by_priority( $new );
-		$_new       = array();
-		foreach ( $priorities as $priority ) {
-			foreach ( $priority as $option ) {
-				$_new[] = $option;
-			}
-		}
-
-		update_post_meta( $post_id, '_ac_additional_content', $_new );
-	} elseif ( empty( $new ) && $old ) {
-		delete_post_meta( $post_id, '_ac_additional_content' );
-	}
+	update_additional_meta( $post_id, $new );
 }
 
 add_action( 'save_post', __NAMESPACE__ . '\\save_metabox' );

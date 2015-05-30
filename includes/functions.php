@@ -101,3 +101,82 @@ function get_defaults() {
 		'priority'           => 10,
 	);
 }
+
+/**
+ * Update the additional meta for a post ID.
+ *
+ * @since 1.1
+ * @param int     $post_id  Post ID
+ * @param [type]  $new_meta New additional meta to update
+ * @return void
+ */
+function update_additional_meta( $post_id, $new_meta ) {
+
+	$old_meta = get_post_meta( $post_id, '_ac_additional_content', true );
+
+	if ( !( !empty( $new_meta ) && is_array( $new_meta ) ) ) {
+		if ( $old_meta ) {
+			// Delete old meta if new meta is empty.
+			delete_post_meta( $post_id, '_ac_additional_content' );
+		}
+		return;
+	}
+
+	$defaults = get_defaults();
+
+	// Validate the new settings
+	foreach ( $new_meta as $key => $setting ) {
+
+		if ( !is_array( $setting ) ) {
+			unset( $new_meta[ $key ] );
+			continue;
+		}
+
+		$setting  = array_merge( $defaults, $setting );
+
+		/**
+		 * Filter html in additional content before it is saved to the database.
+		 *
+		 * @since 1.0
+		 * @param bool    $filter_content Filter content. Default true
+		 */
+		$filter_content = apply_filters( 'ac_additional_content_filter_html', true, $setting, $post_id );
+
+		if ( $filter_content ) {
+			$setting['additional_content'] = wp_filter_post_kses( $setting['additional_content'] );
+		}
+
+		if ( '' === trim( $setting['additional_content'] ) ) {
+			unset( $new_meta[ $key ] );
+			continue;
+		}
+
+		foreach ( array( 'prepend', 'append' ) as $addition ) {
+			if ( 'on' !== $setting[ $addition ] ) {
+				$setting[ $addition ] = $defaults[ $addition ];
+			}
+		}
+
+		$setting['priority'] = absint( $setting['priority'] ) ? absint( $setting['priority'] ) : 10 ;
+
+		$new_meta[ $key ] = $setting;
+	}
+
+	$new_meta = array_values( $new_meta );
+
+	if ( !empty( $new_meta ) && $new_meta != $old_meta ) {
+
+		// Order the new options by priority
+		$priorities = sort_by_priority( $new_meta );
+		$_new_meta       = array();
+		foreach ( $priorities as $priority ) {
+			foreach ( $priority as $option ) {
+				$_new_meta[] = $option;
+			}
+		}
+
+		update_post_meta( $post_id, '_ac_additional_content', $_new_meta );
+	} elseif ( empty( $new_meta ) && $old_meta ) {
+		delete_post_meta( $post_id, '_ac_additional_content' );
+	}
+}

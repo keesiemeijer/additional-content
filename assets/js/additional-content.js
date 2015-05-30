@@ -31,7 +31,7 @@
 			} );
 		} );
 
-		$( '#ac-add-row' ).text( get_add_row_text( rows ) );
+		$( '#ac-add-row' ).val( get_add_row_text( rows ) );
 	}
 
 
@@ -44,6 +44,16 @@
 			text = obj.add_row;
 		}
 		return text;
+	}
+
+	function submitSuccess( response ) {
+		console.log( 'submit success', response );
+	}
+
+
+	function submitError( response ) {
+		alert( 'submit error' );
+		console.log( response );
 	}
 
 
@@ -81,32 +91,40 @@
 			}
 		} );
 
-		var remove_row = $( '<a class="button ac-remove-row" href="#">' + obj.remove_row + '</a>' );
-
 		var rows = container.children( 'div' );
 
-		var options = $( '.ac-options' );
-
-		var toggle_options = $( '<p><a class="ac-toggle_options visible" href="#">' + obj.show_options + '</a></p>' );
-		options.before( toggle_options );
-
-		rows.append( remove_row );
-
-		var add_row_text = get_add_row_text( rows );
-
-		var add_row = $( '<p><a id="ac-add-row" class="button" href="#">' + add_row_text + '</a></p>' );
-
-		container.after( add_row );
-
+		// The template for adding additional content
 		var row = $( '#ac_additional_content_template' ).html();
+
+		var toggle_options = $( '<div><a class="ac-toggle_options" href="#">' + obj.show_options + '</a></div>' );
+
+		// Check if there are options to expand
+		$( '.ac-options' ).each( function( index ) {
+			if ( $( '.ac-option', this ).length ) {
+				$( this ).before( toggle_options.clone() );
+			} else {
+				var actions = $( this ).closest( '.ac-repeat-container' ).find( '.ac-actions' );
+				if ( actions.length ) {
+					actions.find( 'input[type=submit]' ).addClass( 'button-small' );
+					actions.removeClass( 'js-visually-hidden' );
+				}
+			}
+		} );
+
+		reset_rows();
 
 		// Add row click event
 		$( '#ac-add-row' ).on( 'click', function( e ) {
 			e.preventDefault();
+
 			container.append( row );
 			var _row = container.children( 'div' ).last();
+
+			if ( !$( '.ac-option', _row ).length ) {
+				_row.find( 'input[type=submit]' ).addClass( 'button-small' );
+			}
+
 			var color = _row.css( 'backgroundColor' );
-			_row.append( remove_row.clone() );
 			_row.css( 'backgroundColor', '#FFFF33' ).animate( {
 				backgroundColor: color
 			}, {
@@ -118,10 +136,11 @@
 			reset_rows();
 		} );
 
+
 		// Remove row click event
-		container.on( 'click', 'a.ac-remove-row', function( e ) {
+		container.on( 'click', '.ac-remove', function( e ) {
 			e.preventDefault();
-			var _row = $( this ).parent();
+			var _row = $( this ).closest( '.ac-repeat-container' );
 
 			_row.css( 'backgroundColor', '#faa' ).fadeOut( 350, function() {
 				_row.remove();
@@ -129,15 +148,19 @@
 			} );
 		} );
 
+
 		// Toggle options click event
 		container.on( 'click', '.ac-toggle_options', function( e ) {
 			e.preventDefault();
-			var curr_options = $( this ).closest( 'div' ).find( '.ac-options' );
+			var curr_options = $( this ).closest( '.ac-repeat-container' ).find( '.ac-options' );
+
 			if ( curr_options.length ) {
 				$( this ).text( curr_options.hasClass( 'js-visually-hidden' ) ? obj.hide_options : obj.show_options );
 				curr_options.toggleClass( 'js-visually-hidden' );
+				$( this ).closest( '.ac-repeat-container' ).find( '.ac-actions' ).toggleClass( 'js-visually-hidden' );
 			}
 		} );
+
 
 		// checkboxes change event
 		container.on( 'change', '[type="checkbox"]', function( e ) {
@@ -156,10 +179,8 @@
 			}
 
 			var content = $( this ).closest( '.ac-repeat-container' ).find( '.ac-content' );
-			var color = content.css( 'backgroundColor' );
 			content.text( label + ':' );
 		} );
-
 	} );
 
 } )( jQuery );

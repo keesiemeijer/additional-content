@@ -28,7 +28,7 @@ function enqueue_scripts() {
 	wp_register_script(
 		'additional_content',
 		ADDITIONAL_CONTENT_PLUGIN_URL . 'assets/js/additional-content.min.js',
-		array( 'jquery', 'jquery-ui-sortable', 'jquery-color' ),
+		array( 'jquery', 'wp-util', 'jquery-ui-sortable', 'jquery-color' ),
 		false,
 		true );
 
@@ -37,11 +37,11 @@ function enqueue_scripts() {
 	$text = metabox_text();
 
 	$js_vars = array(
-		'add_row'        => __( 'Add additional content', 'additional-content' ),
-		'add_more_row'   => __( 'Add more additional content', 'additional-content' ),
-		'remove_row'     => __( 'Remove', 'additional-content' ),
 		'hide_options'   => __( 'hide options', 'additional-content' ),
 		'show_options'   => __( 'show options', 'additional-content' ),
+		'add_row'        => $text['add_row'],
+		'add_more_row'   => $text['add_more_row'],
+		'remove_row'     => $text['remove_row'],
 		'content'        => $text['content'],
 		'append'         => $text['append_content'],
 		'prepend'        => $text['prepend_content'],
