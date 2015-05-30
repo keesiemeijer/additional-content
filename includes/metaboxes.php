@@ -42,7 +42,9 @@ function metabox_classes() {
  * @return array Array with text strings.
  */
 function metabox_text() {
+
 	$text =  array(
+		'title'	                 => __( 'Additional Content', 'additional-content' ),
 		'content'                => __( 'Content', 'additional-content' ),
 		'prepend_content'        => __( 'Prepend Content', 'additional-content' ),
 		'append_content'         => __( 'Append Content', 'additional-content' ),
@@ -95,15 +97,10 @@ function label_text( $fields ) {
  * @return void
  */
 function add_meta_boxes( $post_type ) {
-	/**
-	 * This filter allows you to change the title of the metabox.
-	 *
-	 * @since 1.1
-	 * @param unknown $title Title of the metabox.
-	 */
-	$title = apply_filters( 'additional_content_metabox_title', __( 'Additional Content', 'additional-content' ), $post_type );
 
-	add_meta_box( 'additional-content', $title, __NAMESPACE__ . '\\meta_box', $post_type, 'normal', 'default' );
+	$text = metabox_text();
+
+	add_meta_box( 'additional-content', $text['title'], __NAMESPACE__ . '\\meta_box', $post_type, 'normal', 'default' );
 }
 
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\\add_meta_boxes' );

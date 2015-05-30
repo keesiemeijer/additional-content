@@ -80,7 +80,7 @@ function get_content( $content = '', $post_id = 0 ) {
 		return $content;
 	}
 
-	$additional_content = new AC_Additional_Content_Public( absint( $post_id ) );
+	$additional_content = new AC_Public( absint( $post_id ) );
 	$content = $additional_content->get_additional_content( (string) $content );
 
 	return $content;
