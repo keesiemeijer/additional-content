@@ -63,7 +63,7 @@ if ( ! defined( 'ADDITIONAL_CONTENT_PLUGIN_FILE' ) ) {
 require plugin_dir_path( __FILE__ ) . 'includes/install.php';
 
 if ( !class_exists( 'WPUpdatePhp' ) ) {
-	require plugin_dir_path( __FILE__ ) . 'includes/WPUpdatePhp.php';
+	require ADDITIONAL_CONTENT_PLUGIN_DIR . 'vendor/wpupdatephp/wp-update-php/src/WPUpdatePhp.php';
 }
 
 // Aim high :)
