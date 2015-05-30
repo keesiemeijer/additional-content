@@ -1,0 +1,18 @@
+{
+	"name"       : "keesiemeijer/additional-content",
+	"description": "Add additional content before or after post content in single post pages.",
+	"homepage"   : "https://github.com/keesiemeijer/additional-content",
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-2.0+",
+	"authors"    : [
+		{
+			"name"    : "Kees Meijer",
+			"homepage": "https://keesiemeijer.wordpress.com/"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"composer/installers": "~1.0",
+		"wpupdatephp/wp-update-php": "*"
+	}
+}
