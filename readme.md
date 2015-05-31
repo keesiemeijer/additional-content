@@ -19,14 +19,14 @@ Or download it directly as a [ZIP file](https://github.com/keesiemeijer/addition
 
 ## PHP requirements
 
-This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of 5.4 or greater. 
+This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of **5.4.0** or greater. 
 
 WordPress has PHP 5.2.4 as the minimum required version. This is a version that has been unsupported since early 2011. The PHP 5.3.* versions have been unsupported since August 2014 as well. This means that these versions don't receive any updates, which leaves them potentially insecure. [http://www.wpupdatephp.com](http://www.wpupdatephp.com)
 
-The plugin shows a notice when activating on the older PHP versions.
+**Note**: The plugin shows a notice when activated on the older PHP versions.
 ![Admin notice](/../screenshots/assets/img/admin-notice.png?raw=true)
 
-## Changing the text in the metaboxes
+## Changing metabox text
 Let's say you want to use this plugin for users to add shortcodes after the content on the single post pages. The text string can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
 
 ```php
@@ -54,7 +54,7 @@ function change_additional_content_text_strings( $text ) {
 
 ![Metabox with changed text strings](/../screenshots/assets/img/metabox_shortcode_example.png?raw=true)
 
-## Dissalow Options
+## Options Display
 The prepend, append and priority fields can be removed with the `additional_content_metabox_options` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
 
 ```php
@@ -70,7 +70,7 @@ function remove_additional_content_options( $options ) {
 
 ![Metabox without options](/../screenshots/assets/img/metabox_options_example.png?raw=true)
 
-## Allowing additional content on other pages
+## Additional content on other pages than single posts
 
 Use the `additional_content_add_content` filter if you want additional content to display on other pages as singular post pages. Put this in your (child) theme's functions.php file or use it in a plugin. Exampe adds the additional content to home page posts.
 
