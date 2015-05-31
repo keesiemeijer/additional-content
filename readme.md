@@ -8,7 +8,7 @@ Add additional content before or after post content in single post pages. Additi
 
 ![Additional content metabox](/../screenshots/assets/img/metabox.png?raw=true)
 
-## Required
+## Requirements
 
 This plugin requires the Wordpress [recommended php version](https://wordpress.org/about/requirements/) 5.4 or greater.
 
