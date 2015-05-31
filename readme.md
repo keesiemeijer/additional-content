@@ -17,7 +17,7 @@ git clone https://github.com/keesiemeijer/additional-content.git
 
 Or download it directly as a [ZIP file](https://github.com/keesiemeijer/additional-content/archive/master.zip)
 
-## Requirements
+## PHP requirements
 
 This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of 5.4 or greater. 
 
