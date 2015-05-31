@@ -14,7 +14,7 @@ This plugin requires the [Wordpress recommended PHP version](https://wordpress.o
 
 WordPress has PHP 5.2.4 as the minimum required version. This is a version that has been unsupported since early 2011. The PHP 5.3.* versions have been unsupported since August 2014 as well. This means that these versions don't receive any updates, which leaves them potentially insecure. [http://www.wpupdatephp.com](http://www.wpupdatephp.com)
 
-The plugin shows a notice when activating on older versions.
+The plugin shows a notice when activating on older PHP versions.
 ![Admin notice](/../screenshots/assets/img/admin-notice.png?raw=true)
 
 ## Changing the text in the metaboxes
