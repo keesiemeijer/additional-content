@@ -8,6 +8,12 @@ Add additional content before or after post content in single post pages. Additi
 
 ![Additional content metabox](/../screenshots/assets/img/metabox.png?raw=true)
 
+## Required
+
+This plugin requires the Wordpress [recommended php version](https://wordpress.org/about/requirements/) 5.4 or greater.
+
+WordPress has PHP 5.2.4 as the minimum required version. This is a version that has been unsupported since early 2011. The PHP 5.3.* versions have been unsupported since August 2014 as well. This means that these versions don't receive any updates, which leaves them potentially insecure. [http://www.wpupdatephp.com](http://www.wpupdatephp.com)
+
 ## Changing the text in the metaboxes
 Let's say you want to use this plugin for users to add shortcodes after the content on the single post pages. The text string can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
 
