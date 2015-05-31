@@ -59,8 +59,6 @@ if ( ! defined( 'ADDITIONAL_CONTENT_PLUGIN_FILE' ) ) {
 	define( 'ADDITIONAL_CONTENT_PLUGIN_FILE', __FILE__ );
 }
 
-// Includes Files
-require plugin_dir_path( __FILE__ ) . 'includes/install.php';
 
 if ( !class_exists( 'WPUpdatePhp' ) ) {
 	require ADDITIONAL_CONTENT_PLUGIN_DIR . 'vendor/wpupdatephp/wp-update-php/src/WPUpdatePhp.php';
@@ -72,5 +70,5 @@ $updatePhp = new WPUpdatePhp( '5.4.0' );
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 
 	// Get Additional Content Running.
-	keesiemeijer\Additional_Content\additional_content();
+	require ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/install.php';
 }

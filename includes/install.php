@@ -17,13 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
+additional_content_init();
+
 /**
  * Loads the plugin's text domain and includes files.
  *
  * @since 1.0
  * @return void.
  */
-function additional_content() {
+function additional_content_init() {
 
 	$dir = dirname( plugin_basename( ADDITIONAL_CONTENT_PLUGIN_FILE ) ) . '/languages/';
 	load_plugin_textdomain( 'additional-content', '', $dir );
