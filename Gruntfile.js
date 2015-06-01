@@ -1,11 +1,14 @@
 module.exports = function( grunt ) {
 
+	// Load multiple grunt tasks using globbing patterns
+require('load-grunt-tasks')(grunt);
+
 	'use strict';
 	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
 	// Project configuration
 	grunt.initConfig( {
 
-		pkg:    grunt.file.readJSON( 'package.json' ),
+		pkg: grunt.file.readJSON( 'package.json' ),
 
 		addtextdomain: {
 			options: {
@@ -41,6 +44,7 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
+
 		uglify: {
 			options: {
 				banner: '/*\n' +
@@ -52,20 +56,55 @@ module.exports = function( grunt ) {
 
 			my_target: {
 				files: {
-					'assets/js/additional-content.min.js': [ 'assets/js/additional-content.js' ] // 10
+					'includes/assets/js/additional-content.min.js': [ 'includes/assets/js/additional-content.js' ] // 10
 				}
 			}
 		},
 
+		// Clean up build directory
+		clean: {
+			main: [ 'build/<%= pkg.name %>' ]
+		},
 
+		// Copy the theme into the build directory
+		copy: {
+			main: {
+				src: [
+					'**',
+					'!node_modules/**',
+					'!vendor/composer/**',
+					'!bin/**',
+					'!tests/**',
+					'!build/**',
+					'!.git/**',
+					'!vendor/autoload.php',
+					'!Gruntfile.js',
+					'!package.json',
+					'!.gitignore',
+					'!.gitmodules',
+					'!.gitattributes',
+					'!.editorconfig',
+					'!.tx/**',
+					'!**/Gruntfile.js',
+					'!**/package.json',
+					'!**/phpunit.xml',
+					'!**/composer.lock',
+					'!**/README.md',
+					'!**/readme.md',
+					'!**/CHANGELOG.md',
+					'!**/CONTRIBUTING.md',
+					'!**/travis.yml',
+					'!**/*~'
+				],
+				dest: 'build/<%= pkg.name %>/'
+			}
+		}
 
 	} );
-
-	grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
-	grunt.loadNpmTasks( 'grunt-contrib-uglify' ); // 11
-	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
-	grunt.registerTask( 'readme', ['wp_readme_to_markdown']);
+	
+	grunt.registerTask( 'i18n', [ 'addtextdomain', 'makepot' ] );
+	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown' ] );
+	grunt.registerTask( 'build', [ 'uglify', 'makepot', 'clean', 'copy' ] );
 
 	grunt.util.linefeed = '\n';
 

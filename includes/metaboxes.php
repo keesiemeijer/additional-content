@@ -175,7 +175,7 @@ function meta_box() {
 		// Default meta box.
 		$fields           = $defaults;
 		$fields['append'] = 'on';
-		$visible          = '';
+		$visible          = ' js-no-toggle';
 		$label            = $text['append_content'];
 		include 'partials/repeatable-fields.php';
 	}

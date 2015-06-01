@@ -27,7 +27,7 @@ function enqueue_scripts() {
 
 	wp_register_script(
 		'additional_content',
-		ADDITIONAL_CONTENT_PLUGIN_URL . 'assets/js/additional-content.min.js',
+		ADDITIONAL_CONTENT_PLUGIN_URL . 'includes/assets/js/additional-content.min.js',
 		array( 'jquery', 'wp-util', 'jquery-ui-sortable', 'jquery-color' ),
 		false,
 		true );

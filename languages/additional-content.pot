@@ -2,10 +2,10 @@
 # This file is distributed under the GPL v2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Additional Content 1.0-beta1\n"
+"Project-Id-Version: Additional Content 1.0\n"
 "Report-Msgid-Bugs-To: "
 "http://wordpress.org/support/plugin/additional-content\n"
-"POT-Creation-Date: 2015-05-28 09:16:35+00:00\n"
+"POT-Creation-Date: 2015-06-01 15:48:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,76 +25,72 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: additional-content.php:105 additional-content.php:117
-msgid "Cheatin&#8217; huh?"
+#. Plugin Name of the plugin/theme
+msgid "Additional Content"
 msgstr ""
 
-#: includes/metaboxes.php:40
+#: build/additional-content/includes/metaboxes.php:48 includes/metaboxes.php:48
 msgid "Content"
 msgstr ""
 
-#: includes/metaboxes.php:41
+#: build/additional-content/includes/metaboxes.php:49 includes/metaboxes.php:49
 msgid "Prepend Content"
 msgstr ""
 
-#: includes/metaboxes.php:42
+#: build/additional-content/includes/metaboxes.php:50 includes/metaboxes.php:50
 msgid "Append Content"
 msgstr ""
 
-#: includes/metaboxes.php:43
+#: build/additional-content/includes/metaboxes.php:51 includes/metaboxes.php:51
 msgid "Prepend and Append Content"
 msgstr ""
 
-#: includes/metaboxes.php:44
+#: build/additional-content/includes/metaboxes.php:52 includes/metaboxes.php:52
 msgid "Prepend"
 msgstr ""
 
-#: includes/metaboxes.php:45
+#: build/additional-content/includes/metaboxes.php:53 includes/metaboxes.php:53
 msgid "Append"
 msgstr ""
 
-#: includes/metaboxes.php:46
+#: build/additional-content/includes/metaboxes.php:54 includes/metaboxes.php:54
 msgid "Priority"
 msgstr ""
 
-#: includes/metaboxes.php:47
-msgid "Add additional content to the post content on single post pages. "
-msgstr ""
-
-#: includes/metaboxes.php:48
-msgid "The priority gives you control over when additional content is added."
-msgstr ""
-
-#: includes/metaboxes.php:49
-msgid "Default is 10."
-msgstr ""
-
-#: includes/metaboxes.php:51
-msgid "Content is added in order of priority"
-msgstr ""
-
-#: includes/scripts.php:37
+#: build/additional-content/includes/metaboxes.php:55 includes/metaboxes.php:55
 msgid "Add additional content"
 msgstr ""
 
-#: includes/scripts.php:38
+#: build/additional-content/includes/metaboxes.php:56 includes/metaboxes.php:56
 msgid "Add more additional content"
 msgstr ""
 
-#: includes/scripts.php:39
+#: build/additional-content/includes/metaboxes.php:57 includes/metaboxes.php:57
 msgid "Remove"
 msgstr ""
 
-#: includes/scripts.php:40
+#: build/additional-content/includes/metaboxes.php:58 includes/metaboxes.php:58
+msgid "Add additional content to the post content on single post pages. "
+msgstr ""
+
+#: build/additional-content/includes/metaboxes.php:59 includes/metaboxes.php:59
+msgid "The priority gives you control over when additional content is added."
+msgstr ""
+
+#: build/additional-content/includes/metaboxes.php:60 includes/metaboxes.php:60
+msgid "Default is 10."
+msgstr ""
+
+#: build/additional-content/includes/metaboxes.php:62 includes/metaboxes.php:62
+msgid "Content is added in order of priority"
+msgstr ""
+
+#: build/additional-content/includes/scripts.php:40 includes/scripts.php:40
 msgid "hide options"
 msgstr ""
 
-#: includes/scripts.php:41
+#: build/additional-content/includes/scripts.php:41 includes/scripts.php:41
 msgid "show options"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Additional Content"
 msgstr ""
 
 #. Description of the plugin/theme
