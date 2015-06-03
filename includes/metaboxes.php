@@ -55,11 +55,11 @@ function metabox_text() {
 		'add_row'                => __( 'Add additional content', 'additional-content' ),
 		'add_more_row'           => __( 'Add more additional content', 'additional-content' ),
 		'remove_row'             => __( 'Remove', 'additional-content' ),
-		'header_info'            => __( 'Add additional content to the post content on single post pages. ', 'additional-content' ),
-		'priority_info'          => __( 'The priority gives you control over when additional content is added.', 'additional-content' )
+		'header_info'            => __( 'Display additional content in single posts pages.', 'additional-content' ),
+		'priority_info'          => __( 'The priority gives you control over when additional content is displayed.', 'additional-content' )
 		. ' ' . __( 'Default is 10.', 'additional-content' )
 		//. ' ' . __( 'Higher numbers correspond with later execution in relation to plugins or themes that also add additional content.', 'additional-content' ),
-		. ' ' . __( 'Content is added in order of priority', 'additional-content' )
+		. ' ' . __( 'Content is displayed in order of priority', 'additional-content' )
 	);
 
 	return apply_filters( 'additional_content_metabox_text', $text );

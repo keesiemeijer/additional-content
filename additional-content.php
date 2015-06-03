@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Additional Content
  * Plugin URI:
- * Description: Add additional content before or after post content in single post pages. Additional content can be added or edited in the edit or publish post screen.
+ * Description: Add additional content before or after post content in single post pages.
  * Author: keesiemijer
  * Author URI:
  * License: GPL v2
