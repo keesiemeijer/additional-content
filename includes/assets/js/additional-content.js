@@ -29,6 +29,7 @@
 				}
 
 			} );
+
 		} );
 
 		$( '#ac-add-row' ).val( get_add_row_text( rows ) );
@@ -45,17 +46,6 @@
 		}
 		return text;
 	}
-
-	function submitSuccess( response ) {
-		console.log( 'submit success', response );
-	}
-
-
-	function submitError( response ) {
-		alert( 'submit error' );
-		console.log( response );
-	}
-
 
 	$( document ).ready( function() {
 
@@ -96,12 +86,15 @@
 		// The template for adding additional content
 		var row = $( '#ac_additional_content_template' ).html();
 
-		var toggle_options = $( '<div><a class="ac-toggle_options" href="#">' + obj.show_options + '</a></div>' );
+		var toggle_options = $( '<div><a class="ac-toggle_options" aria-expanded="false" href="#">' + obj.show_options + '</a></div>' );
 
 		// Check if there are options to expand
 		$( '.ac-options' ).each( function( index ) {
 			if ( $( '.ac-option', this ).length ) {
-				if(!$(this).hasClass('js-no-toggle') ) {
+				if ( !$( this ).hasClass( 'js-no-toggle' ) ) {
+					var id = $( this ).attr( 'id' ).split( '-' );
+					var controls = 'ac-options-' + id[ 2 ] + ' ac-actions-' + id[ 2 ];
+					$( 'a', toggle_options ).attr( 'aria-controls', controls );
 					$( this ).before( toggle_options.clone() );
 				}
 			} else {
@@ -121,6 +114,9 @@
 
 			container.append( row );
 			var _row = container.children( 'div' ).last();
+
+			// remove id for not messing up existing aria-controls
+			_row.find( '.ac-options, .ac-actions' ).removeAttr( 'id' );
 
 			if ( !$( '.ac-option', _row ).length ) {
 				_row.find( 'input[type=submit]' ).addClass( 'button-small' );
@@ -157,9 +153,12 @@
 			var curr_options = $( this ).closest( '.ac-repeat-container' ).find( '.ac-options' );
 
 			if ( curr_options.length ) {
-				$( this ).text( curr_options.hasClass( 'js-visually-hidden' ) ? obj.hide_options : obj.show_options );
 				curr_options.toggleClass( 'js-visually-hidden' );
+				var hidden = curr_options.hasClass( 'js-visually-hidden' );
+
+				$( this ).text( ( hidden ? obj.show_options : obj.hide_options ) );
 				$( this ).closest( '.ac-repeat-container' ).find( '.ac-actions' ).toggleClass( 'js-visually-hidden' );
+				$( this ).attr( 'aria-expanded', ( hidden ? 'false' : 'true' ) );
 			}
 		} );
 

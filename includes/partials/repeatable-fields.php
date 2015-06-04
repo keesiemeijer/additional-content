@@ -3,7 +3,7 @@
 		<label class="ac-content" for="ac_additional_content-<?php echo $i; ?>"><?php echo $label; ?>:</label>
 		<textarea id="ac_additional_content-<?php echo $i; ?>" class="large-text" name="ac_additional_content[<?php echo $i; ?>][additional_content]" cols="40" rows="2"><?php echo esc_textarea( $fields['additional_content'] ); ?></textarea>
 	</p>
-	<div class="ac-options<?php echo $visible; ?>"> 
+	<div id="ac-options-<?php echo $i; ?>" class="ac-options<?php echo $visible; ?>"> 
 		<p class="<?php echo sanitize_html_class( $class['append_prepend'] ); ?>">
 			<label class="selectit" for="ac_prepend-<?php echo $i; ?>" style="margin-right:2em;">
 				<input id="ac_prepend-<?php echo $i; ?>" type="checkbox" name="ac_additional_content[<?php echo $i; ?>][prepend]" value="on" data-ac-type="prepend" <?php checked( $fields['prepend'], 'on' );  ?>/>
@@ -25,7 +25,7 @@
 			<?php endif; ?>
 		</p>
 	</div>
-	<div class="ac-actions<?php echo $visible; ?>">
-		<input id="ac-remove-<?php echo $i; ?>" class="button ac-remove" type="submit" value="<?php esc_attr_e( $text['remove_row'] ); ?>" name="ac_additional_content[<?php echo $i; ?>][remove]">
+	<div id="ac-actions-<?php echo $i; ?>" class="ac-actions<?php echo $visible; ?>">
+		<input id="ac_remove-<?php echo $i; ?>" class="button ac-remove" type="submit" value="<?php esc_attr_e( $text['remove_row'] ); ?>" name="ac_additional_content[<?php echo $i; ?>][remove]">
 	</div>
 </div>
