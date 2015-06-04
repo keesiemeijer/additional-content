@@ -2,10 +2,10 @@
 # This file is distributed under the GPL v2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Additional Content 1.0\n"
+"Project-Id-Version: Additional Content 1.1.0\n"
 "Report-Msgid-Bugs-To: "
 "http://wordpress.org/support/plugin/additional-content\n"
-"POT-Creation-Date: 2015-06-01 15:48:31+00:00\n"
+"POT-Creation-Date: 2015-06-04 14:11:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,11 +70,11 @@ msgid "Remove"
 msgstr ""
 
 #: build/additional-content/includes/metaboxes.php:58 includes/metaboxes.php:58
-msgid "Add additional content to the post content on single post pages. "
+msgid "Display additional content in single posts pages."
 msgstr ""
 
 #: build/additional-content/includes/metaboxes.php:59 includes/metaboxes.php:59
-msgid "The priority gives you control over when additional content is added."
+msgid "The priority gives you control over when additional content is displayed."
 msgstr ""
 
 #: build/additional-content/includes/metaboxes.php:60 includes/metaboxes.php:60
@@ -82,7 +82,7 @@ msgid "Default is 10."
 msgstr ""
 
 #: build/additional-content/includes/metaboxes.php:62 includes/metaboxes.php:62
-msgid "Content is added in order of priority"
+msgid "Content is displayed in order of priority"
 msgstr ""
 
 #: build/additional-content/includes/scripts.php:40 includes/scripts.php:40
@@ -94,10 +94,7 @@ msgid "show options"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"Add additional content before or after post content in single post pages. "
-"Additional content can be added or edited in the edit or publish post "
-"screen."
+msgid "Add additional content before or after post content in single post pages."
 msgstr ""
 
 #. Author of the plugin/theme

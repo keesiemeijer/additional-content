@@ -5,9 +5,9 @@
  * Description: Add additional content before or after post content in single post pages.
  * Author: keesiemijer
  * Author URI:
- * License: GPL v2
+ * License: GPL-2.0+
  * Author URI:
- * Version: 1.0
+ * Version: 1.1.0
  * Text Domain: additional-content
  * Domain Path: languages
  *
