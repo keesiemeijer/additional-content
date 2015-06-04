@@ -22,7 +22,7 @@ require('load-grunt-tasks')(grunt);
 		},
 
 		wp_readme_to_markdown: {
-			your_target: {
+			target: {
 				files: {
 					'README.md': 'readme.txt'
 				}
@@ -54,7 +54,7 @@ require('load-grunt-tasks')(grunt);
 					' **/\n'
 			},
 
-			my_target: {
+			target: {
 				files: {
 					'includes/assets/js/additional-content.min.js': [ 'includes/assets/js/additional-content.js' ] // 10
 				}
@@ -72,12 +72,11 @@ require('load-grunt-tasks')(grunt);
 				src: [
 					'**',
 					'!node_modules/**',
-					'!vendor/composer/**',
+					'!vendor/**',
 					'!bin/**',
 					'!tests/**',
 					'!build/**',
 					'!.git/**',
-					'!vendor/autoload.php',
 					'!Gruntfile.js',
 					'!package.json',
 					'!.gitignore',
@@ -98,13 +97,28 @@ require('load-grunt-tasks')(grunt);
 				],
 				dest: 'build/<%= pkg.name %>/'
 			}
-		}
+		},
+
+		version: {
+			readmetxt: {
+				options: {
+					prefix: 'Stable tag: *'
+				},
+				src: [ 'readme.txt' ]
+			},
+			plugin: {
+				options: {
+					prefix: 'Version: *'
+				},
+				src: [ 'readme.md', 'additional-content.php' ]
+			},
+		},
 
 	} );
 	
 	grunt.registerTask( 'i18n', [ 'addtextdomain', 'makepot' ] );
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown' ] );
-	grunt.registerTask( 'build', [ 'uglify', 'makepot', 'clean', 'copy' ] );
+	grunt.registerTask( 'build', [ 'uglify', 'version', 'makepot', 'clean', 'copy' ] );
 
 	grunt.util.linefeed = '\n';
 
