@@ -59,13 +59,10 @@ if ( ! defined( 'ADDITIONAL_CONTENT_PLUGIN_FILE' ) ) {
 	define( 'ADDITIONAL_CONTENT_PLUGIN_FILE', __FILE__ );
 }
 
-
-if ( !class_exists( 'WPUpdatePhp' ) ) {
-	require ADDITIONAL_CONTENT_PLUGIN_DIR . 'vendor/wpupdatephp/wp-update-php/src/WPUpdatePhp.php';
-}
+require ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/class-update-php.php';
 
 // Aim high :)
-$updatePhp = new WPUpdatePhp( '5.4.0' );
+$updatePhp = new Additional_Content_Update_Php( '5.4.0' );
 
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 
