@@ -88,6 +88,24 @@ function get_content( $content = '', $post_id = 0 ) {
 
 
 /**
+ * Checks if a string is empty.
+ * String could be "0"
+ *
+ * @since 1.2
+ * @param string  $content Content to check.
+ * @return bool True if string is not empty.
+ */
+function is_empty_string( $content ) {
+
+	if ( is_null( $content ) || '' === trim( $content ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+
+/**
  * Returns the defaults for additional content metabox fields.
  *
  * @since 1.0
@@ -146,7 +164,7 @@ function update_additional_meta( $post_id, $new_meta ) {
 			$setting['additional_content'] = wp_filter_post_kses( $setting['additional_content'] );
 		}
 
-		if ( '' === trim( $setting['additional_content'] ) ) {
+		if ( is_empty_string( $setting['additional_content'] ) ) {
 			unset( $new_meta[ $key ] );
 			continue;
 		}
@@ -164,18 +182,20 @@ function update_additional_meta( $post_id, $new_meta ) {
 
 	$new_meta = array_values( $new_meta );
 
-	if ( !empty( $new_meta ) && $new_meta != $old_meta ) {
+	if ( !empty( $new_meta )  ) {
 
-		// Order the new options by priority
+		$_new_meta  = array();
 		$priorities = sort_by_priority( $new_meta );
-		$_new_meta       = array();
+
 		foreach ( $priorities as $priority ) {
 			foreach ( $priority as $option ) {
 				$_new_meta[] = $option;
 			}
 		}
 
-		update_post_meta( $post_id, '_ac_additional_content', $_new_meta );
+		if ( $_new_meta != $old_meta ) {
+			update_post_meta( $post_id, '_ac_additional_content', $_new_meta );
+		}
 	} elseif ( empty( $new_meta ) && $old_meta ) {
 		delete_post_meta( $post_id, '_ac_additional_content' );
 	}
