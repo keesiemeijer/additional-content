@@ -22,12 +22,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AC_Public {
 
 	/**
-	 * Additional content options for a post.
+	 * Additional content options.
 	 *
 	 * @since 1.0
 	 * @var array
 	 */
-	private $options = array();
+	private $options          = array();
+
+	/**
+	 * Additional content options single post pages.
+	 *
+	 * @since 1.0
+	 * @var array
+	 */
+	private $options_singular = array();
 
 
 	public function __construct( $post_id = 0 ) {
@@ -71,9 +79,9 @@ class AC_Public {
 	 */
 	private function setup_options( $post_id = 0 ) {
 
-		$this->options = array();
-		$post_id       = absint( $post_id );
-		$add_filters   = true;
+		$this->options          = array();
+		$post_id                = absint( $post_id );
+		$add_filters            = true;
 
 		if ( $post_id ) {
 			// Don't add filters.
@@ -106,6 +114,10 @@ class AC_Public {
 		$this->options = sort_by_priority( $this->options );
 
 		if ( $add_filters ) {
+
+			// store singular options
+			$this->options_singular = $this->options;
+			$this->options          = array();
 
 			// Add a filter to the_content for every priority.
 			foreach ( $priorities as $priority ) {
@@ -142,7 +154,7 @@ class AC_Public {
 			}
 
 			// Continue if additional_content is empty.
-			if ( is_null( $option['additional_content'] ) || $option['additional_content'] === '' ) {
+			if ( is_empty_string( $option['additional_content'] ) ) {
 				continue;
 			}
 
@@ -172,7 +184,7 @@ class AC_Public {
 			return $content;
 		}
 
-		return $this->process_additional_content( $content );
+		return $this->process_additional_content( $content, true );
 	}
 
 
@@ -212,9 +224,9 @@ class AC_Public {
 	 * @param string  $content Post content.
 	 * @return string Post content with additional content from a priority added.
 	 */
-	public function process_additional_content( $content ) {
+	public function process_additional_content( $content, $singular = false ) {
 
-		$options = $this->options;
+		$options = $singular ? $this->options_singular : $this->options;
 
 		// The priority options are grouped by priority.
 		// Check if a first (priority) option exists.
@@ -241,7 +253,11 @@ class AC_Public {
 		$content = $prepend . $content;
 
 		// Remove the first priority option group after processing.
-		array_shift(  $this->options );
+		if( $singular ) {
+			array_shift( $this->options_singular );
+		} else {
+			array_shift( $this->options );
+		}
 
 		return $content;
 	}
