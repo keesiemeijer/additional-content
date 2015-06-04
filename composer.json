@@ -1,6 +1,6 @@
 {
 	"name"       : "keesiemeijer/additional-content",
-	"description": "Add additional content before or after post content in single post pages.",
+	"description": "Displays additional content before or after post content in single post pages.",
 	"homepage"   : "https://github.com/keesiemeijer/additional-content",
 	"type"       : "wordpress-plugin",
 	"license"    : "GPL-2.0+",
@@ -11,8 +11,6 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.0",
-		"composer/installers": "~1.0",
-		"wpupdatephp/wp-update-php": "*"
+		"php": ">=5.4.0"
 	}
 }
