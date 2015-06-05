@@ -82,7 +82,7 @@ class Additional_Content_Update_Php {
 
 	public function minimum_admin_notice() {
 		echo '<div class="error">';
-		echo '<p>Unfortunately, this plugin can not run on PHP versions older than '. $this->minimum_version .'. Read more information about <a href="http://www.wpupdatephp.com/update/">how you can update</a>.</p>';
+		echo '<p>Unfortunately, the plugin Additional Content can not run on PHP versions older than '. $this->minimum_version .'. Read more information about <a href="http://www.wpupdatephp.com/update/">how you can update</a>.</p>';
 		echo '</div>';
 	}
 
