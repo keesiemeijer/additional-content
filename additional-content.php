@@ -7,7 +7,7 @@
  * Author URI:
  * License: GPL-2.0+
  * Author URI:
- * Version: 1.1.0
+ * Version: 1.1.3
  * Text Domain: additional-content
  * Domain Path: languages
  *
