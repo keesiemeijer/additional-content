@@ -16,8 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wp_embed;
 
 /**
- * Concept for applying plugin filters for the_content copied from the Whistles plugin by Justin Tadlock.
- *
+ * Concept for applying plugin filters for the_content. 
+ * Copied from the Whistles plugin by Justin Tadlock.
+ * https://github.com/justintadlock/whistles
+ * 
  * Use the same default filters as 'the_content' with a little more flexibility.
  */
 add_filter( 'the_additional_content', array( $wp_embed, 'run_shortcode' ),   5 );

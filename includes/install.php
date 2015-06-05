@@ -16,8 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
+// Let's get Additional Content Running.
 additional_content_init();
+
 
 /**
  * Loads the plugin's text domain and includes files.
@@ -31,6 +32,7 @@ function additional_content_init() {
 	load_plugin_textdomain( 'additional-content', '', $dir );
 
 	require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/functions.php';
+	// Yay for PHP >= 5.4 and Composer
 
 	if ( !is_admin() ) {
 		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/filters.php';

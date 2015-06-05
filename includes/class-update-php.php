@@ -1,13 +1,10 @@
 <?php
 /**
- * Forked and altered class from the WP Update PHP Library.
+ * Re-named class from the WP Update PHP Library (version 1.1.0) by Coen Jacobs.
  * https://github.com/WPupdatePHP/wp-update-php
  *
- * Original class can throw a fatal error because of this issue.
- * https://github.com/WPupdatePHP/wp-update-php/issues/6
- *
  * @package     Additional Content
- * @subpackage  Functions/Metaboxes 
+ * @subpackage  Classes/Additional_Content_Update_Php 
  * @author    Coen Jacobs
  * @license   GPLv3
  * @link      https://github.com/WPupdatePHP/wp-update-php

@@ -39,6 +39,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// This file should be PHP 5.2 save 
+
 // Plugin version.
 if ( ! defined( 'ADDITIONAL_CONTENT_VERSION' ) ) {
 	define( 'ADDITIONAL_CONTENT_VERSION', '1.0' );
@@ -59,6 +61,8 @@ if ( ! defined( 'ADDITIONAL_CONTENT_PLUGIN_FILE' ) ) {
 	define( 'ADDITIONAL_CONTENT_PLUGIN_FILE', __FILE__ );
 }
 
+// Need to require the class for PHP 5.2
+// No autoloading available.
 require ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/class-update-php.php';
 
 // Aim high :)
