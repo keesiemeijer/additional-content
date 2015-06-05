@@ -31,14 +31,27 @@ function additional_content_init() {
 	$dir = dirname( plugin_basename( ADDITIONAL_CONTENT_PLUGIN_FILE ) ) . '/languages/';
 	load_plugin_textdomain( 'additional-content', '', $dir );
 
-	require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/functions.php';
 	// Yay for PHP >= 5.4 and Composer
+	require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'vendor/autoload.php';
 
 	if ( !is_admin() ) {
 		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/filters.php';
-		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/class-public.php';
 	}
 }
+
+/**
+ * instantiate public class on single post pages
+ *
+ * @since 1.3 
+ * @return void
+ */
+function single_init(){
+	if( is_single() ) {
+		$additional_content = new AC_Public();
+	}
+}
+
+add_action( 'wp', __NAMESPACE__ . '\\single_init', 99 );
 
 
 /**

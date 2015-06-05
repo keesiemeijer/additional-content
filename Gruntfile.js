@@ -72,7 +72,6 @@ require('load-grunt-tasks')(grunt);
 				src: [
 					'**',
 					'!node_modules/**',
-					'!vendor/**',
 					'!bin/**',
 					'!tests/**',
 					'!build/**',
@@ -87,7 +86,6 @@ require('load-grunt-tasks')(grunt);
 					'!**/Gruntfile.js',
 					'!**/package.json',
 					'!**/phpunit.xml',
-					'!**/composer.lock',
 					'!**/README.md',
 					'!**/readme.md',
 					'!**/CHANGELOG.md',

@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Additional_Content_Update_Php' => $baseDir . '/includes/class-update-php.php',
+    'keesiemeijer\\Additional_Content\\AC_Public' => $baseDir . '/includes/class-public.php',
 );

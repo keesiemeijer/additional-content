@@ -1,16 +1,19 @@
 {
-	"name"       : "keesiemeijer/additional-content",
+	"name": "keesiemeijer/additional-content",
 	"description": "Displays additional content before or after post content in single post pages.",
-	"homepage"   : "https://github.com/keesiemeijer/additional-content",
-	"type"       : "wordpress-plugin",
-	"license"    : "GPL-2.0+",
-	"authors"    : [
-		{
-			"name"    : "Kees Meijer",
-			"homepage": "https://keesiemeijer.wordpress.com/"
-		}
-	],
-	"require": {
-		"php": ">=5.4.0"
-	}
+	"homepage": "https://github.com/keesiemeijer/additional-content",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0+",
+	"authors": [ {
+		"name": "Kees Meijer",
+		"homepage": "https://keesiemeijer.wordpress.com/"
+	} ],
+	"support": {
+		"issues": "https://github.com/keesiemeijer/additional-content/issues",
+		"source": "https://github.com/keesiemeijer/additional-content"
+	},
+	"autoload": {
+        "classmap": ["includes/"],
+        "files": ["includes/functions.php"]
+    }
 }

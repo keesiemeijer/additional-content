@@ -41,7 +41,7 @@ class AC_Public {
 	public function __construct( $post_id = 0 ) {
 
 		if ( !$post_id ) {
-			add_action( 'wp', array( $this, 'setup' ), 99 );
+			$this->setup_single_options();
 		} else {
 			// Setup additional content for a post id.
 			$this->setup_options( $post_id );
@@ -55,7 +55,7 @@ class AC_Public {
 	 * @since 1.0
 	 * @return void
 	 */
-	public function setup() {
+	private function setup_single_options() {
 
 		/**
 		 * Setup additional content for singular post pages content or not.
@@ -263,5 +263,3 @@ class AC_Public {
 	}
 
 }
-
-$additional_content = new AC_Public();
