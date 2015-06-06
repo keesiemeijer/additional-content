@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Additional Content 1.1.3\n"
 "Report-Msgid-Bugs-To: "
 "http://wordpress.org/support/plugin/additional-content\n"
-"POT-Creation-Date: 2015-06-06 11:22:18+00:00\n"
+"POT-Creation-Date: 2015-06-06 14:40:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,59 +29,59 @@ msgstr ""
 msgid "Additional Content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:48 includes/metaboxes.php:48
+#: build/additional-content/includes/metaboxes.php:61 includes/metaboxes.php:61
 msgid "Content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:49 includes/metaboxes.php:49
+#: build/additional-content/includes/metaboxes.php:62 includes/metaboxes.php:62
 msgid "Prepend Content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:50 includes/metaboxes.php:50
+#: build/additional-content/includes/metaboxes.php:63 includes/metaboxes.php:63
 msgid "Append Content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:51 includes/metaboxes.php:51
+#: build/additional-content/includes/metaboxes.php:64 includes/metaboxes.php:64
 msgid "Prepend and Append Content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:52 includes/metaboxes.php:52
+#: build/additional-content/includes/metaboxes.php:65 includes/metaboxes.php:65
 msgid "Prepend"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:53 includes/metaboxes.php:53
+#: build/additional-content/includes/metaboxes.php:66 includes/metaboxes.php:66
 msgid "Append"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:54 includes/metaboxes.php:54
+#: build/additional-content/includes/metaboxes.php:67 includes/metaboxes.php:67
 msgid "Priority"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:55 includes/metaboxes.php:55
+#: build/additional-content/includes/metaboxes.php:68 includes/metaboxes.php:68
 msgid "Add additional content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:56 includes/metaboxes.php:56
+#: build/additional-content/includes/metaboxes.php:69 includes/metaboxes.php:69
 msgid "Add more additional content"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:57 includes/metaboxes.php:57
+#: build/additional-content/includes/metaboxes.php:70 includes/metaboxes.php:70
 msgid "Remove"
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:58 includes/metaboxes.php:58
+#: build/additional-content/includes/metaboxes.php:71 includes/metaboxes.php:71
 msgid "Display additional content in single posts pages."
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:59 includes/metaboxes.php:59
+#: build/additional-content/includes/metaboxes.php:72 includes/metaboxes.php:72
 msgid "The priority gives you control over when additional content is displayed."
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:60 includes/metaboxes.php:60
+#: build/additional-content/includes/metaboxes.php:73 includes/metaboxes.php:73
 msgid "Default is 10."
 msgstr ""
 
-#: build/additional-content/includes/metaboxes.php:62 includes/metaboxes.php:62
+#: build/additional-content/includes/metaboxes.php:75 includes/metaboxes.php:75
 msgid "Content is displayed in order of priority"
 msgstr ""
 
