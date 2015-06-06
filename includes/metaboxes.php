@@ -24,6 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 function metabox_classes() {
 	$classes  = array();
 	$defaults = array( 'append_prepend' => true, 'priority' => true );
+
+	/**
+	 * Display options or not
+	 *
+	 * @since 1.0
+	 * @param array   Array with options.
+	 */
 	$options  = apply_filters( 'additional_content_metabox_options', $defaults );
 	$options  = array_merge( $defaults, $options );
 
@@ -43,26 +50,33 @@ function metabox_classes() {
  */
 function metabox_text() {
 
-	$text =  array(
-		'title'	                 => __( 'Additional Content', 'additional-content' ),
-		'content'                => __( 'Content', 'additional-content' ),
-		'prepend_content'        => __( 'Prepend Content', 'additional-content' ),
-		'append_content'         => __( 'Append Content', 'additional-content' ),
-		'prepend_append_content' => __( 'Prepend and Append Content', 'additional-content' ),
-		'prepend'                => __( 'Prepend', 'additional-content' ),
-		'append'                 => __( 'Append', 'additional-content' ),
-		'priority'               => __( 'Priority', 'additional-content' ),
-		'add_row'                => __( 'Add additional content', 'additional-content' ),
-		'add_more_row'           => __( 'Add more additional content', 'additional-content' ),
-		'remove_row'             => __( 'Remove', 'additional-content' ),
-		'header_info'            => __( 'Display additional content in single posts pages.', 'additional-content' ),
-		'priority_info'          => __( 'The priority gives you control over when additional content is displayed.', 'additional-content' )
-		. ' ' . __( 'Default is 10.', 'additional-content' )
-		//. ' ' . __( 'Higher numbers correspond with later execution in relation to plugins or themes that also add additional content.', 'additional-content' ),
-		. ' ' . __( 'Content is displayed in order of priority', 'additional-content' )
+	/**
+	 * Text strings for the additional content metabox.
+	 * 
+	 * @since 1.0
+	 * @param Array with text strings for the metabox.
+	 */
+	$text =  apply_filters( 'additional_content_metabox_text', array(
+			'title'                  => __( 'Additional Content', 'additional-content' ),
+			'content'                => __( 'Content', 'additional-content' ),
+			'prepend_content'        => __( 'Prepend Content', 'additional-content' ),
+			'append_content'         => __( 'Append Content', 'additional-content' ),
+			'prepend_append_content' => __( 'Prepend and Append Content', 'additional-content' ),
+			'prepend'                => __( 'Prepend', 'additional-content' ),
+			'append'                 => __( 'Append', 'additional-content' ),
+			'priority'               => __( 'Priority', 'additional-content' ),
+			'add_row'                => __( 'Add additional content', 'additional-content' ),
+			'add_more_row'           => __( 'Add more additional content', 'additional-content' ),
+			'remove_row'             => __( 'Remove', 'additional-content' ),
+			'header_info'            => __( 'Display additional content in single posts pages.', 'additional-content' ),
+			'priority_info'          => __( 'The priority gives you control over when additional content is displayed.', 'additional-content' )
+			. ' ' . __( 'Default is 10.', 'additional-content' )
+			//. ' ' . __( 'Higher numbers correspond with later execution in relation to plugins or themes that also add additional content.', 'additional-content' ),
+			. ' ' . __( 'Content is displayed in order of priority', 'additional-content' )
+		)
 	);
 
-	return apply_filters( 'additional_content_metabox_text', $text );
+	return $text;
 }
 
 
