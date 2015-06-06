@@ -1,7 +1,7 @@
 module.exports = function( grunt ) {
 
 	// Load multiple grunt tasks using globbing patterns
-require('load-grunt-tasks')(grunt);
+	require( 'load-grunt-tasks' )( grunt );
 
 	'use strict';
 	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
@@ -97,6 +97,7 @@ require('load-grunt-tasks')(grunt);
 			}
 		},
 
+		// read version from package.json
 		version: {
 			readmetxt: {
 				options: {
@@ -110,13 +111,61 @@ require('load-grunt-tasks')(grunt);
 				},
 				src: [ 'readme.md', 'additional-content.php' ]
 			},
+			define: {
+				options: {
+					prefix: "'ADDITIONAL_CONTENT_VERSION', '*"
+				},
+				src: [ 'additional-content.php' ]
+			},
+
 		},
 
+		// composer update
+		composer: {
+			build: {
+				options: {
+					cwd: 'build/additional-content',
+				}
+			},
+			main: {
+				options: {
+					cwd: '',
+				}
+			}
+		}
+
 	} );
-	
+
+	grunt.loadNpmTasks( 'grunt-composer' );
+
+	grunt.registerTask( 'composer_update', function( key, value ) {
+
+		// build composer.json
+		var projectFile = "build/additional-content/composer.json";
+
+		if ( !grunt.file.exists( projectFile ) ) {
+			grunt.log.error( "file " + projectFile + " not found" );
+			return true; //return false to abort the execution
+		}
+
+		//get file as json object
+		var project = grunt.file.readJSON( projectFile ); 
+
+		project[ 'autoload' ][ 'classmap' ] = [ "includes/" ];
+
+		//serialize it back to file
+		grunt.file.write( projectFile, JSON.stringify( project, null, 2 ) ); 
+		grunt.log.ok('updated composer.json in the build directory');
+
+		// composer update (in build and main directory)
+		grunt.task.run('composer:build:update');
+		grunt.task.run('composer:main:update');
+		
+	} );
+
 	grunt.registerTask( 'i18n', [ 'addtextdomain', 'makepot' ] );
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown' ] );
-	grunt.registerTask( 'build', [ 'uglify', 'version', 'makepot', 'clean', 'copy' ] );
+	grunt.registerTask( 'build', [ 'uglify', 'version', 'makepot', 'clean', 'copy', 'composer_update' ] );
 
 	grunt.util.linefeed = '\n';
 
