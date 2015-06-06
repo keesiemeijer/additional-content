@@ -17,15 +17,15 @@ class Misc_Tests extends WP_UnitTestCase {
 
 	function test_output() {
 
-		// create a post
+		// Create a post.
 		$post_id = $this->factory->post->create();
 		$meta = $this->utils->additional1;
 
-		//set additional post meta
+		// Add additional post meta to the post.
 		update_post_meta( $post_id, '_ac_additional_content', array( $meta ) );
 		$meta['additional_content'] = 'new_content';
 
-		// the following functions should not output anything.
+		// The following functions should not output anything.
 		ob_start();
 
 		$sort     = sort_by_priority( array( $meta ) );
@@ -33,7 +33,7 @@ class Misc_Tests extends WP_UnitTestCase {
 		$defaults = get_defaults();
 		$update   = update_additional_meta( $post_id, array( $meta ) );
 
-		// uses the AC_Public class
+		// Uses the AC_Public class.
 		$content  = get_content( 'content', $post_id );
 
 		// post-new screen
