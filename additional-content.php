@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version.
 if ( ! defined( 'ADDITIONAL_CONTENT_VERSION' ) ) {
-	define( 'ADDITIONAL_CONTENT_VERSION', '1.0' );
+	define( 'ADDITIONAL_CONTENT_VERSION', '1.1.3' );
 }
 
 // Plugin Folder Path.
