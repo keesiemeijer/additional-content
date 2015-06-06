@@ -17,11 +17,11 @@ class Test_Utils {
 		'priority'           => 10,
 	);
 
-	function __construct( $factory = null ) {
+	public function __construct( $factory = null ) {
 		$this->factory = $factory;
 	}
 
-	function setup_post_screen() {
+	public function setup_post_screen() {
 
 		// set current user
 		$user = $this->factory->user->create( array( 'role' => 'administrator' ) );
@@ -32,7 +32,7 @@ class Test_Utils {
 	}
 
 
-	function get_post_data( $post_id ) {
+	public function get_post_data( $post_id ) {
 		return array(
 			'post_title' => 'Post title',
 			'content' => 'Post content',
