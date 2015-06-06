@@ -8,8 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Additional_Content_Update_Php' => $baseDir . '/includes/class-update-php.php',
     'keesiemeijer\\Additional_Content\\AC_Public' => $baseDir . '/includes/class-public.php',
-    'keesiemeijer\\Additional_Content\\Misc_Tests' => $baseDir . '/tests/test-misc.php',
-    'keesiemeijer\\Additional_Content\\Post_Content_Tests' => $baseDir . '/tests/test-post-content.php',
-    'keesiemeijer\\Additional_Content\\Save_Metabox_Tests' => $baseDir . '/tests/test-save_metabox.php',
     'keesiemeijer\\Additional_Content\\Test_Utils' => $baseDir . '/tests/class-utils.php',
 );

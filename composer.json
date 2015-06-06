@@ -15,7 +15,7 @@
     "source": "https://github.com/keesiemeijer/additional-content"
   },
   "autoload": {
-    "classmap": [ "includes/", "tests/"],
+    "classmap": [ "includes/", "tests/class-utils.php"],
     "files": [
       "includes/functions.php"
     ]
