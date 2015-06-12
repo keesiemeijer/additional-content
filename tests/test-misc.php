@@ -42,10 +42,11 @@ class Misc_Tests extends WP_UnitTestCase {
 
 		$classes  = metabox_classes();
 		$text     = metabox_text();
+		$metabox  = metabox_defaults();
 		$label    = label_text( array( $meta ) );
 
 		$out = ob_get_clean();
 
-		$this->assertEmpty( $out );
+		$this->assertEquals( '', $out );
 	}
 }
