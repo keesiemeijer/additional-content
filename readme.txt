@@ -13,14 +13,15 @@ Display additional content before or after post content in single post pages.
 
 Display additional content before or after post content in single post pages. Add content (for example shortcodes) on a post per post basis in the edit or publish Post screen.
 
+For more information visit the [GitHub repository](https://github.com/keesiemeijer/additional-content).
+
 == Installation ==
-Upload Manually
 
-* Download and unzip the plugin
-* Upload the 'additional-content' folder into the 'plugins' directory
-* Go to the Plugins admin page and activate the plugin
+1. In your WordPress admin panel, go to Plugins > New Plugin, search for "additional content" and click "Install now".
+2. Alternatively, download the plugin and upload the contents of additional-content.zip to your plugins directory, which usually is /wp-content/plugins/.
+3. Activate the plugin
+4. Add additional content in the edit or publish post screens.
 
-Install Via Admin Area
-
-* In the admin area go to Plugins > Add New page. Upload the additional-content.zip file.
-* Click install and then click activate
+== Changelog ==
+= 1.1.3 =
+Initial commit to the WordPress plugins repository.
