@@ -26,8 +26,11 @@ WordPress has PHP 5.2.4 as the minimum required version. This is a version that 
 **Note**: The plugin shows a notice when activated on the older PHP versions.
 ![Admin notice](/../screenshots/assets/img/admin-notice.png?raw=true)
 
-## Changing metabox text
-Let's say you want to use this plugin for users to add shortcodes after the content on the single post pages. The text string can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
+## What is the priority option?
+This plugin is basically a user interface for [the_content filter](https://codex.wordpress.org/Plugin_API/Filter_Reference/the_content). This filter allows themes and plugins to change (or add content to) post content. The default priority for filters is 10. Higher numbers correspond with later execution of adding additional content. This option allows you to display the additional content before or after other plugins might add content.
+
+## Changing the metabox text strings
+Let's say you want to use this plugin for authors to add shortcodes after the content on single post pages. All metabox text strings can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
 
 ```php
 add_filter( 'additional_content_metabox_text', 'change_additional_content_text_strings' );

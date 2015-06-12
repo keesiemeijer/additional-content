@@ -15,6 +15,10 @@ Display additional content before or after post content in single post pages. Ad
 
 For more information visit the [GitHub repository](https://github.com/keesiemeijer/additional-content).
 
+This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of 5.4.0 or greater.
+
+**Note**: The plugin shows an admin notice when activated on older PHP versions. 
+
 == Installation ==
 
 1. In your WordPress admin panel, go to Plugins > New Plugin, search for "additional content" and click "Install now".
