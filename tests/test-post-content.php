@@ -12,8 +12,13 @@ class Post_Content_Tests extends WP_UnitTestCase {
 
 		// Use the utils class to create posts with terms.
 		$this->utils = new Test_Utils( $this->factory );
+		add_shortcode( 'shortcode_content', array( $this, 'shortcode_content' ) );
+
 	}
 
+	function shortcode_content( $atts ) {
+		return 'shortcode content';
+	}
 
 	function test_get_content() {
 		// Creates a post with content "Post content 1".
@@ -141,6 +146,44 @@ class Post_Content_Tests extends WP_UnitTestCase {
 
 		$expected = '<p>' . $post_content . '</p>';
 		$this->assertEquals( strip_ws( $expected ), strip_ws( $content ) );
+	}
+
+	function test_post_additional_content_shortcode() {
+
+		$blob =<<<BLOB
+Post content
+
+[shortcode_content]
+BLOB;
+		$meta =
+			$post_id_1 = $this->factory->post->create( array( 'post_content' => $blob ) );
+		$post_id_2 = $this->factory->post->create( array( 'post_content' => 'Post content' ) );
+
+		$meta = $this->utils->additional1;
+		$meta['priority'] = 10;
+		$meta['additional_content'] = '[shortcode_content]';
+		update_post_meta( $post_id_2, '_ac_additional_content', array( $meta ) );
+
+		// Go to the the single post 1 page.
+		$this->go_to( get_permalink( $post_id_1 ) );
+
+		// Get the post content.
+		ob_start();
+		the_post();
+		the_content();
+		$content_1 = ob_get_clean();
+		rewind_posts();
+
+		// Go to the the single post 2 page.
+		$this->go_to( get_permalink( $post_id_2 ) );
+
+		// Get the post content.
+		ob_start();
+		the_post();
+		the_content();
+		$content_2 = ob_get_clean();
+
+		$this->assertEquals( strip_ws( $content_1 ), strip_ws( $content_2 ) );
 	}
 
 
