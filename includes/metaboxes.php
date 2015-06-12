@@ -52,9 +52,9 @@ function metabox_text() {
 
 	/**
 	 * Text strings for the additional content metabox.
-	 * 
+	 *
 	 * @since 1.0
-	 * @param Array with text strings for the metabox.
+	 * @param Array   with text strings for the metabox.
 	 */
 	$text =  apply_filters( 'additional_content_metabox_text', array(
 			'title'                  => __( 'Additional Content', 'additional-content' ),
@@ -77,6 +77,35 @@ function metabox_text() {
 	);
 
 	return $text;
+}
+
+
+/**
+ * Metabox defaults.
+ *
+ * @since 1.1.3
+ * @return array Array with metabox defaults.
+ */
+function metabox_defaults() {
+	$defaults = $_defaults = get_defaults();
+
+	// Default for new metaboxes is append.
+	$_defaults['append'] = 'on';
+
+	/**
+	 * Add new defaults for the metabox options.
+	 *
+	 * @since 1.1.3
+	 * @param array   $defaults Array with default metabox options.
+	 */
+	$_defaults = apply_filters( 'additional_content_metabox_defaults', $_defaults );
+	$defaults  = array_merge( $defaults, $_defaults );
+
+	if ( !( empty( $defaults['append'] ) && empty( $defaults['prepend'] ) ) ) {
+		$defaults['append'] = 'on';
+	}
+
+	return $defaults;
 }
 
 
@@ -129,8 +158,15 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\\add_meta_boxes' );
 function meta_box() {
 	global $post;
 
-	$additional = get_post_meta( $post->ID, '_ac_additional_content', true );
-	$defaults   = get_defaults();
+	$additional       = get_post_meta( $post->ID, '_ac_additional_content', true );
+	$defaults         = get_defaults();
+	$metabox_defaults = metabox_defaults();
+	$text             = metabox_text();
+	$class            = metabox_classes();
+	$visible          = ' js-visually-hidden';
+	$i                = 0;
+
+	// Start the output of the metabox
 
 	echo "<style type='text/css'>
 			#additional-content-container > div {
@@ -165,17 +201,12 @@ function meta_box() {
 			}
 			</style>";
 
-	$text    = metabox_text();
-	$class   = metabox_classes();
-	$visible = ' js-visually-hidden';
-
 	echo ( !empty( $text['header_info'] ) ) ? "<p>" . $text['header_info'] . '</p>' : '';
 
 	wp_nonce_field( 'ac_additional_content_nonce', 'ac_additional_content_nonce' );
 
 	echo '<div id="additional-content-container">';
 
-	$i=0;
 	if ( !empty( $additional ) ) {
 		// Saved meta boxes.
 		foreach ( $additional as $fields ) {
@@ -186,25 +217,23 @@ function meta_box() {
 		}
 
 	} else {
-		// Default meta box.
-		$fields           = $defaults;
-		$fields['append'] = 'on';
+		// New meta box.
+		$fields           = $metabox_defaults;
 		$visible          = ' js-no-toggle';
-		$label            = $text['append_content'];
+		$label            = label_text( $fields );
 		include 'partials/repeatable-fields.php';
 	}
 
 	$add_row = get_transient( 'additional_content_add_empty_row' );
 
 	if ( $add_row ) {
+		// Javascript is disabled. Let's add an empty metabox
 		delete_transient( 'additional_content_add_empty_row' );
 
-		// Adds empty row if browsing with Javascript disabled.
 		$i++;
-		$fields           = $defaults;
-		$fields['append'] = 'on';
+		$fields           = $metabox_defaults;
 		$visible          = '';
-		$label            = $text['append_content'];
+		$label            = label_text( $fields );
 		include 'partials/repeatable-fields.php';
 	}
 
@@ -220,13 +249,13 @@ function meta_box() {
  * @return void
  */
 function admin_footer_scripts() {
-	$fields           = get_defaults();
+	$fields           = metabox_defaults();
 	$text             = metabox_text();
 	$class            = metabox_classes();
 	$visible          = '';
-	$fields['append'] = 'on';
-	$label            = $text['append_content'];
-	$i = 0;
+	$label            = label_text( $fields );
+	$i                = 0;
+
 	echo '<script type="text/html" id="ac_additional_content_template">';
 	include 'partials/repeatable-fields.php';
 	echo '</script>';
