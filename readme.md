@@ -9,8 +9,12 @@ Display additional content before or after post content in single post pages. Ad
 ![Additional content metabox](/../screenshots/assets/img/metabox.png?raw=true)
 
 ## Installation
+Install via Composer into your WordPress plugins directory:
+```bash
+composer create-project keesiemeijer/additional-content
+```
 
-Clone the GitHub repository in the plugins folder: 
+Or clone the GitHub repository in the plugins directory: 
 ```bash
 git clone https://github.com/keesiemeijer/additional-content.git
 ```
@@ -27,7 +31,7 @@ WordPress has PHP 5.2.4 as the minimum required version. This is a version that 
 ![Admin notice](/../screenshots/assets/img/admin-notice.png?raw=true)
 
 ## What is the priority option?
-This plugin is basically a user interface for [the_content filter](https://codex.wordpress.org/Plugin_API/Filter_Reference/the_content). This filter allows themes and plugins to change (or add content to) post content. The default priority for filters is 10. Higher numbers correspond with later execution of adding additional content. This option allows you to display the additional content before or after other plugins might add content.
+This plugin is basically a user interface for [the_content filter](https://codex.wordpress.org/Plugin_API/Filter_Reference/the_content). This filter allows themes and plugins to change (or add content to) post content before it's displayed. The default priority for filters is 10. Higher numbers correspond with later execution of adding additional content. This option allows you to display the additional content before or after other plugins that add content with this filter.
 
 ## Changing the metabox text strings
 Let's say you want to use this plugin for authors to add shortcodes after the content on single post pages. All metabox text strings can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
@@ -75,7 +79,7 @@ function remove_additional_content_options( $options ) {
 
 ## Additional content on other pages than single posts
 
-Use the `additional_content_add_content` filter if you want additional content to display on other pages as singular post pages. Put this in your (child) theme's functions.php file or use it in a plugin. Exampe adds the additional content to home page posts.
+Use the `additional_content_add_content` filter if you want additional content to display on other pages as singular post pages. Put this in your (child) theme's functions.php file or use it in a plugin. This example adds the additional content to home page posts.
 
 ```php
 add_filter( 'the_content', 'additional_content_home_page' );

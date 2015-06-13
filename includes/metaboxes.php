@@ -110,7 +110,7 @@ function metabox_defaults() {
 
 
 /**
- * Returns the label text used for the content textarea.
+ * Returns the label text used for the additional content textarea.
  *
  * @since 1.0
  * @param array   $fields Array with field options.
