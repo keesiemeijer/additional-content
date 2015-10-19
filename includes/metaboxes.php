@@ -201,11 +201,14 @@ function meta_box() {
 			}
 			</style>";
 
-	echo ( !empty( $text['header_info'] ) ) ? "<p>" . $text['header_info'] . '</p>' : '';
+
+	$header      = ( !empty( $text['header_info'] ) ) ? "<p id='ac_info'>" . $text['header_info'] . '</p>' : '';
+	$describedby = ( !empty( $header ) ) ? ' aria-describedby="ac_info"' : '';
+	echo $header;
 
 	wp_nonce_field( 'ac_additional_content_nonce', 'ac_additional_content_nonce' );
 
-	echo '<div id="additional-content-container">';
+	echo '<div id="additional-content-container" role="region" aria-live="polite" aria-relevant="additions removals">';
 
 	if ( !empty( $additional ) ) {
 		// Saved meta boxes.
@@ -255,6 +258,7 @@ function admin_footer_scripts() {
 	$visible          = '';
 	$label            = label_text( $fields );
 	$i                = 0;
+	$describedby = ( !empty( $text['header_info'] ) ) ? ' aria-describedby="ac_info"' : '';
 
 	echo '<script type="text/html" id="ac_additional_content_template">';
 	include 'partials/repeatable-fields.php';
@@ -274,6 +278,11 @@ add_action( 'admin_print_footer_scripts', __NAMESPACE__ . '\\admin_footer_script
  * @return string The destination URL.
  */
 function redirect_filter( $location, $post_id ) {
+
+	if ( !validate_metabox( $post_id ) ) {
+		return $location;
+	}
+
 	if ( isset( $_POST['ac_additional_content'] ) && $_POST['ac_additional_content'] ) {
 		$additionals = $_POST['ac_additional_content'];
 		foreach ( $additionals as $key => $additional ) {
@@ -308,20 +317,9 @@ add_filter( 'redirect_post_location', __NAMESPACE__ . '\\redirect_filter', 10, 2
  */
 function save_metabox( $post_id ) {
 
-	$nonce = ( isset( $_POST['ac_additional_content_nonce'] ) ) ?  $_POST['ac_additional_content_nonce'] : '';
-
-	if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'ac_additional_content_nonce' ) ) {
+	if ( !validate_metabox( $post_id ) ) {
 		return $post_id;
 	}
-
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-
-	if ( !current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-
 
 	$new = array();
 	if ( isset( $_POST['ac_additional_content'] ) ) {
@@ -332,3 +330,30 @@ function save_metabox( $post_id ) {
 }
 
 add_action( 'save_post', __NAMESPACE__ . '\\save_metabox' );
+
+
+/**
+ * Checks nonce and user capabilities.
+ *
+ * @since 1.0
+ * @param int     $post_id Post id.
+ * @return boolean True if nonce and user capabilities are correct
+ */
+function validate_metabox( $post_id = 0 ) {
+
+	$nonce = ( isset( $_POST['ac_additional_content_nonce'] ) ) ?  $_POST['ac_additional_content_nonce'] : '';
+
+	if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'ac_additional_content_nonce' ) ) {
+		return false;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return false;
+	}
+
+	if ( !current_user_can( 'edit_post', $post_id ) ) {
+		return false;
+	}
+
+	return true;
+}

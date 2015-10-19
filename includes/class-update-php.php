@@ -4,7 +4,7 @@
  * https://github.com/WPupdatePHP/wp-update-php
  *
  * @package     Additional Content
- * @subpackage  Classes/Additional_Content_Update_Php 
+ * @subpackage  Classes/Additional_Content_Update_Php
  * @author    Coen Jacobs
  * @license   GPLv3
  * @link      https://github.com/WPupdatePHP/wp-update-php

@@ -17,7 +17,7 @@
   "autoload": {
     "classmap": [ "includes/", "tests/class-utils.php"],
     "files": [
-      "includes/functions.php"
+      "includes/functions.php", "includes/filters.php"
     ]
   }
 }

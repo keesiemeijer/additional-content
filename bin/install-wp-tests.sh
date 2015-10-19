@@ -11,37 +11,92 @@ DB_PASS=$3
 DB_HOST=${4-localhost}
 WP_VERSION=${5-latest}
 
-WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib/includes}
+WP_TESTS_DIR=/tmp/wordpress-tests-lib
 WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
+
+#remove trailing slash
+WP_CORE_DIR=${WP_CORE_DIR%/}
 
 set -ex
 
 download() {
-    if [ `which curl` ]; then
-        curl -s "$1" > "$2";
-    elif [ `which wget` ]; then
-        wget -nv -O "$2" "$1"
-    fi
+	if [ `which curl` ]; then
+		curl -s "$1" > "$2";
+	elif [ `which wget` ]; then
+		wget -nv -O "$2" "$1"
+	fi
+}
+
+wp_core_version(){
+	local version='trunk'
+
+	if [ -f $WP_CORE_DIR/wp-includes/version.php ]; then
+		if grep -q "wp_version = " $WP_CORE_DIR/wp-includes/version.php; then
+			version=$(grep "wp_version = " $WP_CORE_DIR/wp-includes/version.php|awk -F\' '{print $2}')
+		fi
+	fi
+
+	echo $version
+}
+
+wp_api_version(){
+	local latest=''
+	local api_url="http://api.wordpress.org/core/version-check/1.5/"
+
+	if [ `which curl` ]; then
+		latest=$(curl -s "$api_url" | head -n 4 | tail -n 1)
+	elif [ `which wget` ]; then
+		latest=$(wget -S -q -O - "$api_url" | head -n 4 | tail -n 1);
+	fi
+
+	echo $latest
+}
+
+wp_download_exists(){
+	if [ `which curl` ]; then
+		$(curl --output /dev/null --silent --head --fail "$1");
+	elif [ `which wget` ]; then
+		$(wget --spider $1 >/dev/null 2>&1);
+	fi
 }
 
 install_wp() {
 
-	if [ -d $WP_CORE_DIR ]; then
-		return;
+	if [ $WP_VERSION == 'latest' ]; then
+
+		local archive_name='latest'
+		local latest=$(wp_api_version)
+		local url=https://wordpress.org/"wordpress-$latest".tar.gz
+
+		# check if latest version exists
+		if wp_download_exists $url; then
+			WP_VERSION=$latest
+			archive_name="wordpress-$latest"
+		fi
+	else
+		local archive_name="wordpress-$WP_VERSION"
+	fi
+
+	local core_version=$(wp_core_version)
+
+	if [ $core_version != 'trunk' ]; then
+		if [ $core_version == $WP_VERSION ]; then
+			return
+		fi
 	fi
 
 	mkdir -p $WP_CORE_DIR
 
-	if [ $WP_VERSION == 'latest' ]; then
-		local ARCHIVE_NAME='latest'
+	if wp_download_exists "https://wordpress.org/${archive_name}.tar.gz"; then
+
+		download https://wordpress.org/${archive_name}.tar.gz  /tmp/wordpress.tar.gz
+		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C "$WP_CORE_DIR"
+
+		download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php "$WP_CORE_DIR/wp-content/db.php"
 	else
-		local ARCHIVE_NAME="wordpress-$WP_VERSION"
+		echo "Error: WordPress version not found."
+		exit
 	fi
-
-	download https://wordpress.org/${ARCHIVE_NAME}.tar.gz  /tmp/wordpress.tar.gz
-	tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
-
-	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
 }
 
 install_test_suite() {
@@ -52,24 +107,28 @@ install_test_suite() {
 		local ioption='-i'
 	fi
 
-	# set up testing suite if it doesn't yet exist
-	if [ ! "$(ls -A $WP_TESTS_DIR)" ]; then
-		# set up testing suite
-		mkdir -p $WP_TESTS_DIR
-		svn co --quiet http://develop.svn.wordpress.org/trunk/tests/phpunit/includes/ $WP_TESTS_DIR
+	# get the version from the installed WordPress version
+	local core_version=$(wp_core_version)
+
+	if [ $core_version != 'trunk' ]; then
+		core_version="tags/"$core_version
 	fi
 
-	cd $WP_TESTS_DIR
+	# Set up the testing suite from the core version
+	mkdir -p $WP_TESTS_DIR
 
-	if [ ! -f wp-tests-config.php ]; then
-		download https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
-		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
-		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
-		sed $ioption "s/yourusernamehere/$DB_USER/" $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
-		sed $ioption "s/yourpasswordhere/$DB_PASS/" $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" $(dirname ${WP_TESTS_DIR})/wp-tests-config.php
+	if wp_download_exists "https://develop.svn.wordpress.org/$core_version/wp-tests-config-sample.php"; then
+
+		svn export --quiet --force https://develop.svn.wordpress.org/$core_version/tests/phpunit/includes/ $WP_TESTS_DIR/includes
+		cd $WP_TESTS_DIR
+
+		download https://develop.svn.wordpress.org/$core_version/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR/':" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
-
 }
 
 install_db() {

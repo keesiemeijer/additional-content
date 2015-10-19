@@ -1,4 +1,5 @@
 <?php
+namespace keesiemeijer\Additional_Content;
 /**
  * Filters
  *

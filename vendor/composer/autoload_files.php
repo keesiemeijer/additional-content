@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     $baseDir . '/includes/functions.php',
+    $baseDir . '/includes/filters.php',
 );

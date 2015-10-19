@@ -33,10 +33,6 @@ function additional_content_init() {
 
 	// Yay for PHP >= 5.4 and Composer
 	require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'vendor/autoload.php';
-
-	if ( !is_admin() ) {
-		require_once ADDITIONAL_CONTENT_PLUGIN_DIR . 'includes/filters.php';
-	}
 }
 
 /**

@@ -1,6 +1,6 @@
 # [Additional Content](https://github.com/keesiemeijer/additional-content) [![Build Status](https://travis-ci.org/keesiemeijer/additional-content.svg?branch=master)](https://travis-ci.org/keesiemeijer/additional-content) #
 
-Version:           1.1.3  
+Version:           1.1.4  
 Requires at least: 4.0  
 Tested up to:      4.2  
 

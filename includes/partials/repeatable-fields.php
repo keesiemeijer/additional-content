@@ -1,7 +1,7 @@
 <div class="ac-repeat-container">
 	<p class="ac-option-content">
 		<label class="ac-content" for="ac_additional_content-<?php echo $i; ?>"><?php echo $label; ?>:</label>
-		<textarea id="ac_additional_content-<?php echo $i; ?>" class="large-text" name="ac_additional_content[<?php echo $i; ?>][additional_content]" cols="40" rows="2"><?php echo esc_textarea( $fields['additional_content'] ); ?></textarea>
+		<textarea id="ac_additional_content-<?php echo $i; ?>" class="large-text" name="ac_additional_content[<?php echo $i; ?>][additional_content]" cols="40" rows="2" <?php echo $describedby; ?>><?php echo esc_textarea( $fields['additional_content'] ); ?></textarea>
 	</p>
 	<div id="ac-options-<?php echo $i; ?>" class="ac-options<?php echo $visible; ?>"> 
 		<p class="<?php echo sanitize_html_class( $class['append_prepend'] ); ?>">

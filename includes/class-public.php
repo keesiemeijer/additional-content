@@ -27,7 +27,7 @@ class AC_Public {
 	 * @since 1.0
 	 * @var array
 	 */
-	private $options          = array();
+	private $options = array();
 
 	/**
 	 * Additional content options single post pages.
@@ -253,7 +253,7 @@ class AC_Public {
 		$content = $prepend . $content;
 
 		// Remove the first priority option group after processing.
-		if( $singular ) {
+		if ( $singular ) {
 			array_shift( $this->options_singular );
 		} else {
 			array_shift( $this->options );
