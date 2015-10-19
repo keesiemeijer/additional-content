@@ -75,6 +75,7 @@ module.exports = function( grunt ) {
 					'!bin/**',
 					'!tests/**',
 					'!build/**',
+					'!vendor/**',
 					'!.git/**',
 					'!Gruntfile.js',
 					'!package.json',
@@ -158,7 +159,7 @@ module.exports = function( grunt ) {
 		grunt.log.ok('updated composer.json in the build directory');
 
 		// composer update (in build and main directory)
-		grunt.task.run('composer:build:update');
+		grunt.task.run('composer:build:install');
 		grunt.task.run('composer:main:update');
 		
 	} );
