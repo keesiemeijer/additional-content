@@ -1,8 +1,8 @@
 === Additional Content ===
 Contributors: keesiemeijer
-Tags: publish,edit,content
+Tags: post,publish,edit,content,post content,the_content,extra,additional,shortcode,shortcodes
 Requires at least: 4.0
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,9 +15,7 @@ Display additional content before or after post content in single post pages. Ad
 
 For more information visit the [GitHub repository](https://github.com/keesiemeijer/additional-content).
 
-This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of 5.4.0 or greater.
-
-**Note**: The plugin shows an admin notice when activated on older PHP versions. 
+**Note**: This plugin requires the [WordPress recommended PHP version](https://wordpress.org/about/requirements/) of 5.4.0 or greater. The plugin shows an admin notice when activated on older PHP versions. 
 
 == Installation ==
 
@@ -27,5 +25,5 @@ This plugin requires the [WordPress recommended PHP version](https://wordpress.o
 4. Add additional content in the edit or publish post screens.
 
 == Changelog ==
-= 1.1.3 =
+= 1.1.4 =
 Initial commit to the WordPress plugins repository.
