@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * Sorts and groups the options array by priority.
+ * Sorts and groups additional content by priority and key.
  *
  * @since 1.0
  * @param array   $options Array with additional content options.
@@ -32,8 +32,15 @@ function sort_by_priority( $options = array() ) {
 		$options[ $key ]['_priority'] =  array( $option['priority'], $key );
 	}
 
-	// Sort by priority and key
-	uasort(  $options, __NAMESPACE__ . '\\sort' );
+	uasort( $options, function( $a, $b ) {
+			if ( $a['_priority'][0] != $b['_priority'][0] ) {
+				// sort on priority
+				return $a['_priority'][0] < $b['_priority'][0] ? -1 : 1;
+			} else {
+				// sort on key if priority is equal.
+				return $a['_priority'][1] < $b['_priority'][1] ? -1 : 1;
+			}
+		} );
 
 	foreach ( array_values( $options ) as $key => $option ) {
 		// Remove _priority sorting index.
@@ -44,25 +51,6 @@ function sort_by_priority( $options = array() ) {
 	}
 
 	return array_values( $priority_options );
-}
-
-
-/**
- * Callback function for usort() to sort by priority and array key.
- *
- * @since 1.0
- * @param array
- * @param array
- * @return int
- */
-function sort( $a, $b ) {
-	if ( $a['_priority'][0] != $b['_priority'][0] ) {
-		// sort on priority
-		return $a['_priority'][0] < $b['_priority'][0] ? -1 : 1;
-	} else {
-		// sort on key if priority is equal.
-		return $a['_priority'][1] < $b['_priority'][1] ? -1 : 1; // ASC
-	}
 }
 
 
