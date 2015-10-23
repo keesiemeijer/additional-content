@@ -155,8 +155,8 @@ Post content
 
 [shortcode_content]
 BLOB;
-		$meta =
-			$post_id_1 = $this->factory->post->create( array( 'post_content' => $blob ) );
+		$meta = $this->utils->additional1;
+		$post_id_1 = $this->factory->post->create( array( 'post_content' => $blob ) );
 		$post_id_2 = $this->factory->post->create( array( 'post_content' => 'Post content' ) );
 
 		$meta = $this->utils->additional1;
