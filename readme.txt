@@ -54,5 +54,10 @@ This plugin is basically a user interface for [the_content filter](https://codex
 4. Warning when activating this plugin on PHP versions smaller than 5.4.0.
 
 == Changelog ==
+= 1.2.0 =
+* Using anonymous functions for sorting addational content by priority.
+* New unit tests
+* Tested up to WordPress 4.4
+
 = 1.1.4 =
 Initial commit to the WordPress plugins repository.
