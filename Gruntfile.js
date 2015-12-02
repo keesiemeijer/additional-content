@@ -106,6 +106,15 @@ module.exports = function( grunt ) {
 				},
 				src: [ 'readme.txt' ]
 			},
+			tested_up_to: {
+				options: {
+					pkg: {
+						"version": "<%= pkg.tested_up_to %>"
+					},
+					prefix: 'Tested up to: *'
+				},
+				src: [ 'readme.txt', 'readme.md' ]
+			},
 			plugin: {
 				options: {
 					prefix: 'Version: *'
@@ -150,18 +159,18 @@ module.exports = function( grunt ) {
 		}
 
 		//get file as json object
-		var project = grunt.file.readJSON( projectFile ); 
+		var project = grunt.file.readJSON( projectFile );
 
 		project[ 'autoload' ][ 'classmap' ] = [ "includes/" ];
 
 		//serialize it back to file
-		grunt.file.write( projectFile, JSON.stringify( project, null, 2 ) ); 
-		grunt.log.ok('updated composer.json in the build directory');
+		grunt.file.write( projectFile, JSON.stringify( project, null, 2 ) );
+		grunt.log.ok( 'updated composer.json in the build directory' );
 
 		// composer update (in build and main directory)
-		grunt.task.run('composer:build:install');
-		grunt.task.run('composer:main:update');
-		
+		grunt.task.run( 'composer:build:install' );
+		grunt.task.run( 'composer:main:update' );
+
 	} );
 
 	grunt.registerTask( 'i18n', [ 'addtextdomain', 'makepot' ] );

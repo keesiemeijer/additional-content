@@ -8,7 +8,8 @@
 	>
 	<testsuites>
 		<testsuite>
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+			<directory phpVersion="5.4.0" phpVersionOperator=">=" prefix="test-" suffix=".php">./tests/</directory>
+			<file phpVersion="5.4.0" phpVersionOperator="&lt;">./tests/outdated-php-versions.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>

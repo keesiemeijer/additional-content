@@ -12,8 +12,8 @@ class Post_Content_Tests extends WP_UnitTestCase {
 
 		// Use the utils class to create posts with terms.
 		$this->utils = new Test_Utils( $this->factory );
-		add_shortcode( 'shortcode_content', array( $this, 'shortcode_content' ) );
 
+		add_shortcode( 'shortcode_content', array( $this, 'shortcode_content' ) );
 	}
 
 	function shortcode_content( $atts ) {
@@ -155,8 +155,8 @@ Post content
 
 [shortcode_content]
 BLOB;
-		$meta =
-			$post_id_1 = $this->factory->post->create( array( 'post_content' => $blob ) );
+		$meta = $this->utils->additional1;
+		$post_id_1 = $this->factory->post->create( array( 'post_content' => $blob ) );
 		$post_id_2 = $this->factory->post->create( array( 'post_content' => 'Post content' ) );
 
 		$meta = $this->utils->additional1;
