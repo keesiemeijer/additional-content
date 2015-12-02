@@ -7,7 +7,7 @@
  * Author URI:
  * License: GPL-2.0+
  * Author URI:
- * Version: 1.1.4
+ * Version: 1.2.0
  * Text Domain: additional-content
  * Domain Path: languages
  *
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version.
 if ( ! defined( 'ADDITIONAL_CONTENT_VERSION' ) ) {
-	define( 'ADDITIONAL_CONTENT_VERSION', '1.1.4' );
+	define( 'ADDITIONAL_CONTENT_VERSION', '1.2.0' );
 }
 
 // Plugin Folder Path.
