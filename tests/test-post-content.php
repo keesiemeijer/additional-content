@@ -62,6 +62,7 @@ class Post_Content_Tests extends WP_UnitTestCase {
 
 		// Add additional post meta to the post.
 		update_post_meta( $post_id, '_ac_additional_content', $meta );
+		$post_content = get_post_field( 'post_content', $post_id );
 
 		// Go to the the single post page.
 		$this->go_to( get_permalink( $post_id ) );
@@ -75,7 +76,7 @@ class Post_Content_Tests extends WP_UnitTestCase {
 
 		$expected = '
 		<p>World!</p>
-		<p>Post content 1</p>
+		<p>' .  $post_content . '</p>
 		<p>Hello</p>';
 
 		$this->assertEquals( strip_ws( $expected ), strip_ws( $content ) );
