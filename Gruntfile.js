@@ -10,6 +10,8 @@ module.exports = function( grunt ) {
 
 		pkg: grunt.file.readJSON( 'package.json' ),
 
+		gitinfo: {},
+
 		addtextdomain: {
 			options: {
 				textdomain: 'additional-content',
@@ -115,6 +117,15 @@ module.exports = function( grunt ) {
 				},
 				src: [ 'readme.txt', 'readme.md' ]
 			},
+			requires_at_least: {
+				options: {
+					pkg: {
+						"version": "<%= pkg.requires_at_least %>"
+					},
+					prefix: 'Requires at least: *'
+				},
+				src: [ 'readme.txt', 'readme.md' ]
+			},
 			plugin: {
 				options: {
 					prefix: 'Version: *'
@@ -175,7 +186,7 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( 'i18n', [ 'addtextdomain', 'makepot' ] );
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown' ] );
-	grunt.registerTask( 'build', [ 'uglify', 'version', 'makepot', 'clean', 'copy', 'composer_update' ] );
+	grunt.registerTask( 'build', [ 'uglify', 'version', 'clean', 'makepot', 'copy', 'composer_update' ] );
 
 	grunt.util.linefeed = '\n';
 
