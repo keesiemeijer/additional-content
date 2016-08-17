@@ -138,15 +138,18 @@ function update_additional_meta( $post_id, $new_meta ) {
 			continue;
 		}
 
-		$setting  = array_merge( $defaults, $setting );
+		$setting        = array_merge( $defaults, $setting );
+
+		// Filter content for users without the unfiltered_html capability.
+		$filter_content = current_user_can( 'unfiltered_html' ) ? false : true;
 
 		/**
-		 * Filter html in additional content before it is saved to the database.
+		 * Filter html in additional content before it is saved to the database. 
 		 *
 		 * @since 1.0
-		 * @param bool    $filter_content Filter content. Default true
+		 * @param bool    $filter_content Filter content. True for users without the unfiltered_html capability.
 		 */
-		$filter_content = apply_filters( 'ac_additional_content_filter_html', true, $setting, $post_id );
+		$filter_content = apply_filters( 'ac_additional_content_filter_html', $filter_content, $setting, $post_id );
 
 		if ( $filter_content ) {
 			$setting['additional_content'] = wp_filter_post_kses( $setting['additional_content'] );

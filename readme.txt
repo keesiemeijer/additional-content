@@ -2,8 +2,8 @@
 Contributors: keesiemeijer
 Tags: post,publish,edit,content,post content,the_content,extra,additional,shortcode,shortcodes
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 1.2.1-alpha
+Tested up to: 4.6
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,10 +54,10 @@ This plugin is basically a user interface for [the_content filter](https://codex
 4. Warning when activating this plugin on PHP versions smaller than 5.4.0.
 
 == Changelog ==
-= 1.2.0 =
-* Using anonymous functions for sorting addational content by priority.
-* New unit tests
-* Tested up to WordPress 4.4
+= 1.3.0 =
+* Fix bug where additional content was not displayed in pages. Props: [dpinc](https://profiles.wordpress.org/dpinc).
+* Allow unfiltered html for user with the unfiltered_html capability
+* Tested up to WordPress 4.6
 
 = 1.1.4 =
 Initial commit to the WordPress plugins repository.
