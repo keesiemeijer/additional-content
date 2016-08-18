@@ -33,6 +33,9 @@ WordPress has PHP 5.2.4 as the minimum required version. This is a version that 
 ## What is the priority option?
 This plugin is basically a user interface for [the_content filter](https://codex.wordpress.org/Plugin_API/Filter_Reference/the_content). This filter allows themes and plugins to change (or add content to) post content before it's displayed. The default priority for filters is 10. Higher numbers correspond with later execution of adding additional content. This option allows you to display the additional content before or after other plugins that add content with this filter.
 
+## HTML in additional content
+The same html tags that are allowed in the post (text) editor can be used in additional content. If you want to use `<script>` tags in the content the user has to have the `unfiltered_html` capability (superadmin, admin and editor role). 
+
 ## Changing the metabox text strings
 Let's say you want to use this plugin for authors to add shortcodes after the content on single post pages. All metabox text strings can be changed with the `additional_content_metabox_text` filter. Put this in your (child) theme's functions.php file or use it in a plugin.
 
