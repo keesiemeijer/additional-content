@@ -57,13 +57,15 @@ class AC_Public {
 	 */
 	private function setup_single_options() {
 
+		$singular = is_single() || is_page();
+
 		/**
 		 * Setup additional content for singular post pages content or not.
 		 *
 		 * @since 1.0
 		 * @param bool    $singular True when is_singular() returns true.
 		 */
-		$singular = apply_filters( 'additional_content_add_content', is_singular() );
+		$singular = apply_filters( 'additional_content_add_content', $singular );
 
 		if ( $singular ) {
 			$this->setup_options();

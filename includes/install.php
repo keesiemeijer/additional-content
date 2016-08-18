@@ -42,7 +42,7 @@ function additional_content_init() {
  * @return void
  */
 function single_init(){
-	if( is_single() ) {
+	if( is_single() || is_page() ) {
 		$additional_content = new AC_Public();
 	}
 }
