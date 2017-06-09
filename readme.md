@@ -2,7 +2,7 @@
 
 Version:           1.3.1-alpha  
 Requires at least: 4.0  
-Tested up to:      4.6  
+Tested up to:      4.8  
 
 Display additional content before or after post content in single post pages. Add content (for example shortcodes) on a post per post basis in the edit or publish Post screen.
 
