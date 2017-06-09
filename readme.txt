@@ -3,7 +3,7 @@ Contributors: keesiemeijer
 Tags: post,publish,edit,content,post content,the_content,extra,additional,shortcode,shortcodes
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 1.3.1-alpha
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
